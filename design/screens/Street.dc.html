@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Street mode</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;display=swap">
+<style>
+body{margin:0;background:#0B0F1A}
+a{color:#C8FF3E}a:hover{color:#E4FF9A}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; overflow: hidden; box-sizing: border-box; background: #0B0F1A; color: #F3F5FA; font-family: 'DM Sans', system-ui, sans-serif; padding: 20px 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px">
+<a href="Map.dc.html" aria-label="Back to map" style="flex-shrink: 0; width: 44px; height: 44px; box-sizing: border-box; border-radius: 14px; background: #151B2C; border: 1px solid #2B3552; display: flex; align-items: center; justify-content: center; color: #F3F5FA; text-decoration: none"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<div style="flex-grow: 1; display: flex; flex-direction: column">
+<span style="font-size: 22px; font-weight: 700; font-family: 'Chakra Petch', sans-serif">Street Mode</span>
+<span style="font-size: 12px; color: #A3ACC2">Outdoors · public area detected</span>
+</div>
+<span style="display: flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; background: rgba(200, 255, 62, 0.12); border: 1px solid rgba(200, 255, 62, 0.5); color: #C8FF3E; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; font-family: 'Chakra Petch', sans-serif"><span style="width: 7px; height: 7px; border-radius: 50%; background: #C8FF3E"></span>LIVE</span>
+</div>
+<div style="padding: 10px 12px; border-radius: 14px; background: #151B2C; border: 1px solid #2B3552; display: flex; gap: 10px; align-items: center; font-size: 12px; color: #A3ACC2"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: #C8FF3E; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M6 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM18 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM6 15V10a3 3 0 0 1 3-3h7M18 9v5a3 3 0 0 1-3 3H8"></path></svg><span>In public spaces only <b style="color: #F3F5FA">run &amp; walk missions</b> spawn. Exercise spawns return in parks, gyms and at home.</span></div>
+<div style="position: relative; border-radius: 18px; overflow: hidden; border: 1px solid #2B3552">
+<svg width="356" height="150" viewBox="0 0 356 150" aria-hidden="true" style="display: block">
+<rect width="356" height="150" style="fill: #131C33"></rect>
+<path d="M0 118 C 90 92, 170 136, 356 96" style="fill: none; stroke: #0E2D4F; stroke-width: 26"></path>
+<rect x="0" y="40" width="356" height="8" style="fill: #2A3761"></rect>
+<rect x="110" y="0" width="8" height="150" style="fill: #2A3761"></rect>
+<rect x="250" y="0" width="8" height="150" style="fill: #2A3761"></rect>
+<rect x="124" y="54" width="118" height="36" rx="8" style="fill: #16392F"></rect>
+<path d="M40 100 C 60 70, 100 64, 130 72 S 200 60, 236 76 S 300 110, 320 84" style="fill: none; stroke: #C8FF3E; stroke-width: 5; stroke-linecap: round"></path>
+<path d="M320 84 C 330 70, 330 50, 300 30 S 150 22, 60 30 S 20 80, 40 100" style="fill: none; stroke: #C8FF3E; stroke-opacity: 0.55; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 2 10"></path>
+<circle cx="40" cy="100" r="6" style="fill: #0B0F1A; stroke: #C8FF3E; stroke-width: 3"></circle>
+<circle cx="320" cy="84" r="9" style="fill: #C8FF3E; stroke: #0B0F1A; stroke-width: 3"></circle>
+<circle cx="320" cy="84" r="16" style="fill: none; stroke: rgba(200, 255, 62, 0.5); stroke-width: 2"></circle>
+</svg>
+<div style="position: absolute; left: 10px; top: 10px; display: flex; gap: 6px"><span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; background: rgba(52, 216, 176, 0.12); border: 1px solid rgba(52, 216, 176, 0.6); color: #34D8B0; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Chakra Petch', sans-serif; white-space: nowrap">Uncommon</span></div>
+</div>
+<div style="padding: 14px; border-radius: 18px; background: #151B2C; border: 1px solid #2B3552; display: flex; align-items: center; gap: 16px">
+<div style="position: relative; width: 92px; height: 92px; flex-shrink: 0">
+<svg width="92" height="92" viewBox="0 0 92 92" aria-hidden="true"><circle cx="46" cy="46" r="38" style="fill: none; stroke: #2B3552; stroke-width: 10"></circle><circle cx="46" cy="46" r="38" transform="rotate(-90 46 46)" style="fill: none; stroke: #C8FF3E; stroke-width: 10; stroke-linecap: round; stroke-dasharray: 238.8; stroke-dashoffset: 90.7"></circle></svg>
+<span style="position: absolute; left: 0; top: 0; width: 92px; height: 92px; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; font-family: 'Chakra Petch', sans-serif">62%</span>
+</div>
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 15px; font-weight: 700">Lap the Riverside</span>
+<span style="font-size: 26px; line-height: 1; font-weight: 700; font-family: 'Chakra Petch', sans-serif">1.24 <span style="font-size: 15px; color: #A3ACC2">/ 2.0 km</span></span>
+<div style="display: flex; gap: 14px; font-size: 12px; color: #A3ACC2"><span><b style="color: #F3F5FA">6:12</b> /km</span><span><b style="color: #F3F5FA">07:41</b></span><span style="color: #C8FF3E; font-weight: 700">+220 XP</span></div>
+</div>
+</div>
+<span style="font-size: 15px; font-weight: 700; margin-top: 2px">More missions nearby</span>
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; background: #151B2C; border: 1px solid #2B3552"><div style="flex-shrink: 0; width: 36px; height: 40px; "><div style="width: 100%; height: 100%; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #4AA8FF; display: flex; align-items: center; justify-content: center"><div style="width: calc(100% - 6px); height: calc(100% - 7px); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #10172A; display: flex; align-items: center; justify-content: center"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: #4AA8FF; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M14 4a2 2 0 1 0 4 0a2 2 0 1 0-4 0M15 7l-3 5 4 3-1 6M12 12l-5 1M15 7l3 4 3-1M12 12l-2 5-5 1"></path></svg></div></div></div><div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px"><span style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700">Sidewalk Sprint <span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; background: rgba(74, 168, 255, 0.12); border: 1px solid rgba(74, 168, 255, 0.6); color: #4AA8FF; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Chakra Petch', sans-serif; white-space: nowrap">Rare</span></span><span style="font-size: 12px; color: #A3ACC2">800 m in under 4:30</span></div><span style="font-size: 12px; font-weight: 700; color: #C8FF3E; white-space: nowrap; font-family: 'Chakra Petch', sans-serif">+SPD</span></div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; background: #151B2C; border: 1px solid #2B3552"><div style="flex-shrink: 0; width: 36px; height: 40px; "><div style="width: 100%; height: 100%; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #B07CFF; display: flex; align-items: center; justify-content: center"><div style="width: calc(100% - 6px); height: calc(100% - 7px); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #10172A; display: flex; align-items: center; justify-content: center"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: #B07CFF; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M11 4a2 2 0 1 0 4 0a2 2 0 1 0-4 0M13 7l-1 6 3 3v5M12 13l-3 8M13 8l-4 3M13 8l4 3"></path></svg></div></div></div><div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px"><span style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700">Hill Hunter <span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; background: rgba(176, 124, 255, 0.12); border: 1px solid rgba(176, 124, 255, 0.6); color: #B07CFF; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Chakra Petch', sans-serif; white-space: nowrap">Epic</span></span><span style="font-size: 12px; color: #A3ACC2">Climb 40 m of elevation</span></div><span style="font-size: 12px; font-weight: 700; color: #C8FF3E; white-space: nowrap; font-family: 'Chakra Petch', sans-serif">+END</span></div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 16px; background: #151B2C; border: 1px solid #2B3552"><div style="flex-shrink: 0; width: 36px; height: 40px; "><div style="width: 100%; height: 100%; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #B4BCCB; display: flex; align-items: center; justify-content: center"><div style="width: calc(100% - 6px); height: calc(100% - 7px); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #10172A; display: flex; align-items: center; justify-content: center"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: #B4BCCB; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M11 4a2 2 0 1 0 4 0a2 2 0 1 0-4 0M13 7l-1 6 3 3v5M12 13l-3 8M13 8l-4 3M13 8l4 3"></path></svg></div></div></div><div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px"><span style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700">Step Stack <span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; background: rgba(180, 188, 203, 0.12); border: 1px solid rgba(180, 188, 203, 0.6); color: #B4BCCB; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Chakra Petch', sans-serif; white-space: nowrap">Common</span></span><span style="font-size: 12px; color: #A3ACC2">5,000 steps today</span></div><span style="font-size: 12px; font-weight: 700; color: #C8FF3E; white-space: nowrap; font-family: 'Chakra Petch', sans-serif">+END</span></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<div style="padding: 10px 12px; border-radius: 14px; background: #151B2C; border: 1px solid #2B3552; display: flex; flex-direction: column; gap: 6px"><span style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700"><span>Speed</span><span style="font-family: 'Chakra Petch', sans-serif">LV 11</span></span><div style="height: 6px; border-radius: 999px; background: #2B3552; overflow: hidden"><div style="width: 70%; height: 100%; border-radius: 999px; background: #C8FF3E"></div></div></div>
+<div style="padding: 10px 12px; border-radius: 14px; background: #151B2C; border: 1px solid #2B3552; display: flex; flex-direction: column; gap: 6px"><span style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700"><span>Endurance</span><span style="font-family: 'Chakra Petch', sans-serif">LV 14</span></span><div style="height: 6px; border-radius: 999px; background: #2B3552; overflow: hidden"><div style="width: 40%; height: 100%; border-radius: 999px; background: #4AA8FF"></div></div></div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 11px; color: #A3ACC2"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: #A3ACC2; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6l8-3z"></path></svg><span>Missions pause above 25 km/h and never place targets on roadways.</span></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 390, "height": 844}}'>
+class Component extends DCLogic {
+renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

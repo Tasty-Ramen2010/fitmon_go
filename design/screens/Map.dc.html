@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Explore map</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;display=swap">
+<style>
+body{margin:0;background:#0B0F1A}
+a{color:#C8FF3E}a:hover{color:#E4FF9A}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; overflow: hidden; box-sizing: border-box; background: #0B0F1A; color: #F3F5FA; font-family: 'DM Sans', system-ui, sans-serif">
+<div style="position: absolute; left: -1205px; top: -800px; width: 2800px; height: 2800px; border-radius: 50%; overflow: hidden; background: #131C33; transform-origin: 50% 50%; transform: perspective(1800px) rotateX(50deg) rotateZ({{worldRot}}deg)"><svg width="2800" height="2800" viewBox="0 0 2800 2800" aria-hidden="true" style="display: block"><rect x="30" y="30" width="198" height="140" rx="6" style="fill: #1A2544"></rect><rect x="244" y="30" width="198" height="140" rx="6" style="fill: #1D2A4C"></rect><rect x="458" y="30" width="198" height="140" rx="6" style="fill: #18223F"></rect><rect x="672" y="30" width="198" height="140" rx="6" style="fill: #1F2B50"></rect><rect x="30" y="230" width="198" height="390" rx="6" style="fill: #1A2544"></rect><rect x="244" y="230" width="198" height="390" rx="6" style="fill: #1D2A4C"></rect><rect x="458" y="230" width="198" height="390" rx="6" style="fill: #18223F"></rect><rect x="672" y="230" width="198" height="390" rx="6" style="fill: #1F2B50"></rect><rect x="30" y="680" width="198" height="390" rx="6" style="fill: #1A2544"></rect><rect x="244" y="680" width="198" height="390" rx="6" style="fill: #1D2A4C"></rect><rect x="458" y="680" width="198" height="390" rx="6" style="fill: #18223F"></rect><rect x="672" y="680" width="198" height="390" rx="6" style="fill: #1F2B50"></rect><rect x="30" y="1130" width="198" height="287" rx="6" style="fill: #1A2544"></rect><rect x="30" y="1433" width="198" height="287" rx="6" style="fill: #1D2A4C"></rect><rect x="244" y="1130" width="198" height="287" rx="6" style="fill: #18223F"></rect><rect x="244" y="1433" width="198" height="287" rx="6" style="fill: #1F2B50"></rect><rect x="458" y="1130" width="198" height="287" rx="6" style="fill: #1A2544"></rect><rect x="458" y="1433" width="198" height="287" rx="6" style="fill: #1D2A4C"></rect><rect x="672" y="1130" width="198" height="287" rx="6" style="fill: #18223F"></rect><rect x="672" y="1433" width="198" height="287" rx="6" style="fill: #1F2B50"></rect><rect x="30" y="1780" width="198" height="262" rx="6" style="fill: #1A2544"></rect><rect x="30" y="2058" width="198" height="262" rx="6" style="fill: #1D2A4C"></rect><rect x="244" y="1780" width="198" height="262" rx="6" style="fill: #18223F"></rect><rect x="244" y="2058" width="198" height="262" rx="6" style="fill: #1F2B50"></rect><rect x="458" y="1780" width="198" height="262" rx="6" style="fill: #1A2544"></rect><rect x="458" y="2058" width="198" height="262" rx="6" style="fill: #1D2A4C"></rect><rect x="672" y="1780" width="198" height="262" rx="6" style="fill: #18223F"></rect><rect x="672" y="2058" width="198" height="262" rx="6" style="fill: #1F2B50"></rect><rect x="30" y="2380" width="198" height="390" rx="6" style="fill: #1A2544"></rect><rect x="244" y="2380" width="198" height="390" rx="6" style="fill: #1D2A4C"></rect><rect x="458" y="2380" width="198" height="390" rx="6" style="fill: #18223F"></rect><rect x="672" y="2380" width="198" height="390" rx="6" style="fill: #1F2B50"></rect><rect x="930" y="30" width="212" height="140" rx="6" style="fill: #1A2544"></rect><rect x="1158" y="30" width="212" height="140" rx="6" style="fill: #1D2A4C"></rect><rect x="930" y="230" width="212" height="390" rx="6" style="fill: #18223F"></rect><rect x="1158" y="230" width="212" height="390" rx="6" style="fill: #1F2B50"></rect><rect x="1150" y="1130" width="220" height="200" rx="14" style="fill: #243258"></rect><circle cx="1260" cy="1230" r="36" style="fill: none; stroke: #33457A; stroke-width: 6"></circle><rect x="930" y="1130" width="200" height="200" rx="6" style="fill: #1A2544"></rect><rect x="930" y="1350" width="212" height="370" rx="6" style="fill: #1D2A4C"></rect><rect x="1158" y="1350" width="212" height="370" rx="6" style="fill: #18223F"></rect><rect x="930" y="1780" width="212" height="262" rx="6" style="fill: #1F2B50"></rect><rect x="930" y="2058" width="212" height="262" rx="6" style="fill: #1A2544"></rect><rect x="1158" y="1780" width="212" height="262" rx="6" style="fill: #1D2A4C"></rect><rect x="1158" y="2058" width="212" height="262" rx="6" style="fill: #18223F"></rect><rect x="930" y="2380" width="212" height="390" rx="6" style="fill: #1F2B50"></rect><rect x="1158" y="2380" width="212" height="390" rx="6" style="fill: #1A2544"></rect><rect x="1430" y="30" width="237" height="140" rx="6" style="fill: #1D2A4C"></rect><rect x="1683" y="30" width="237" height="140" rx="6" style="fill: #18223F"></rect><rect x="1430" y="230" width="237" height="390" rx="6" style="fill: #1F2B50"></rect><rect x="1683" y="230" width="237" height="390" rx="6" style="fill: #1A2544"></rect><rect x="1430" y="680" width="237" height="390" rx="6" style="fill: #1D2A4C"></rect><rect x="1683" y="680" width="237" height="390" rx="6" style="fill: #18223F"></rect><rect x="1430" y="1130" width="237" height="287" rx="6" style="fill: #1F2B50"></rect><rect x="1430" y="1433" width="237" height="287" rx="6" style="fill: #1A2544"></rect><rect x="1683" y="1130" width="237" height="287" rx="6" style="fill: #1D2A4C"></rect><rect x="1683" y="1433" width="237" height="287" rx="6" style="fill: #18223F"></rect><rect x="1430" y="1780" width="237" height="262" rx="6" style="fill: #1F2B50"></rect><rect x="1430" y="2058" width="237" height="262" rx="6" style="fill: #1A2544"></rect><rect x="1683" y="1780" width="237" height="262" rx="6" style="fill: #1D2A4C"></rect><rect x="1683" y="2058" width="237" height="262" rx="6" style="fill: #18223F"></rect><rect x="1430" y="2380" width="237" height="390" rx="6" style="fill: #1F2B50"></rect><rect x="1683" y="2380" width="237" height="390" rx="6" style="fill: #1A2544"></rect><rect x="1980" y="30" width="252" height="140" rx="6" style="fill: #1D2A4C"></rect><rect x="2248" y="30" width="252" height="140" rx="6" style="fill: #18223F"></rect><rect x="2517" y="30" width="252" height="140" rx="6" style="fill: #1F2B50"></rect><rect x="1980" y="230" width="252" height="390" rx="6" style="fill: #1A2544"></rect><rect x="2248" y="230" width="252" height="390" rx="6" style="fill: #1D2A4C"></rect><rect x="2517" y="230" width="252" height="390" rx="6" style="fill: #18223F"></rect><rect x="1980" y="680" width="252" height="390" rx="6" style="fill: #1F2B50"></rect><rect x="2248" y="680" width="252" height="390" rx="6" style="fill: #1A2544"></rect><rect x="2517" y="680" width="252" height="390" rx="6" style="fill: #1D2A4C"></rect><rect x="1980" y="1130" width="252" height="287" rx="6" style="fill: #18223F"></rect><rect x="1980" y="1433" width="252" height="287" rx="6" style="fill: #1F2B50"></rect><rect x="2248" y="1130" width="252" height="287" rx="6" style="fill: #1A2544"></rect><rect x="2248" y="1433" width="252" height="287" rx="6" style="fill: #1D2A4C"></rect><rect x="2517" y="1130" width="252" height="287" rx="6" style="fill: #18223F"></rect><rect x="2517" y="1433" width="252" height="287" rx="6" style="fill: #1F2B50"></rect><rect x="1980" y="1780" width="790" height="540" rx="22" style="fill: #16392F"></rect><circle cx="2100" cy="1900" r="26" style="fill: #1C4a3b"></circle><circle cx="2250" cy="2000" r="34" style="fill: #1C4a3b"></circle><circle cx="2450" cy="1880" r="22" style="fill: #1C4a3b"></circle><circle cx="2600" cy="2150" r="30" style="fill: #1C4a3b"></circle><circle cx="2150" cy="2200" r="24" style="fill: #1C4a3b"></circle><rect x="1980" y="2380" width="252" height="390" rx="6" style="fill: #1A2544"></rect><rect x="2248" y="2380" width="252" height="390" rx="6" style="fill: #1D2A4C"></rect><rect x="2517" y="2380" width="252" height="390" rx="6" style="fill: #18223F"></rect><rect x="930" y="680" width="440" height="390" rx="26" style="fill: #16392F"></rect><path d="M950 1040 C 1050 900, 1150 980, 1200 840 S 1330 720, 1360 700" style="fill: none; stroke: #235446; stroke-width: 12; stroke-linecap: round"></path><circle cx="1000" cy="740" r="26" style="fill: #1C4A3B"></circle><circle cx="1080" cy="800" r="20" style="fill: #1C4A3B"></circle><circle cx="990" cy="900" r="30" style="fill: #1C4A3B"></circle><circle cx="1120" cy="1010" r="24" style="fill: #1C4A3B"></circle><circle cx="1300" cy="1000" r="28" style="fill: #1C4A3B"></circle><circle cx="1230" cy="760" r="18" style="fill: #1C4A3B"></circle><circle cx="1320" cy="880" r="16" style="fill: #1C4A3B"></circle><path d="M0 430 C 700 330, 1300 540, 2800 380" style="fill: none; stroke: #0E2D4F; stroke-width: 110"></path><path d="M0 430 C 700 330, 1300 540, 2800 380" style="fill: none; stroke: #123A63; stroke-width: 4; stroke-dasharray: 30 40"></path><rect x="0" y="185" width="2800" height="30" style="fill: #2A3761"></rect><rect x="0" y="635" width="2800" height="30" style="fill: #2A3761"></rect><rect x="0" y="1085" width="2800" height="30" style="fill: #2A3761"></rect><rect x="0" y="1735" width="2800" height="30" style="fill: #2A3761"></rect><rect x="0" y="2335" width="2800" height="30" style="fill: #2A3761"></rect><rect x="885" y="0" width="30" height="2800" style="fill: #2A3761"></rect><rect x="1935" y="0" width="30" height="2800" style="fill: #2A3761"></rect><path d="M1950 1750 C 2250 1700, 2500 1500, 2800 1300" style="fill: none; stroke: #2A3761; stroke-width: 30"></path><rect x="1378" y="0" width="44" height="2800" style="fill: #33437A"></rect><line x1="1400" y1="0" x2="1400" y2="2800" style="stroke: #5C6FA8; stroke-width: 3; stroke-dasharray: 18 18"></line><line x1="1400" y1="1420" x2="1400" y2="2400" style="stroke: #C8FF3E; stroke-opacity: 0.45; stroke-width: 10; stroke-linecap: round; stroke-dasharray: 2 22"></line><line x1="1400" y1="1380" x2="1400" y2="1075" style="stroke: #C8FF3E; stroke-opacity: 0.8; stroke-width: 8; stroke-linecap: round; stroke-dasharray: 20 16"></line><circle cx="1400" cy="1400" r="260" style="fill: rgba(200, 255, 62, 0.04); stroke: rgba(200, 255, 62, 0.35); stroke-width: 3; stroke-dasharray: 10 14"></circle></svg></div>
+<div style="position: absolute; left: 0; top: 0; width: 390px; height: 230px; background: linear-gradient(180deg, #0B0F1A 0%, #0B0F1A 30%, rgba(11, 15, 26, 0) 100%)"></div>
+<div style="position: absolute; left: 0; bottom: 0; width: 390px; height: 250px; background: linear-gradient(0deg, rgba(11, 15, 26, 0.95) 0%, rgba(11, 15, 26, 0) 100%)"></div>
+<sc-if value="{{showGym}}" hint-placeholder-val="{{true}}">
+<a href="Gym.dc.html" style="position: absolute; left: {{gym.x}}px; top: {{gym.y}}px; transform: translate(-50%, -100%) scale({{gym.s}}); transform-origin: 50% 100%; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #F3F5FA">
+<div style="padding: 4px 10px; border-radius: 10px; background: #0B0F1A; border: 1px solid #C8FF3E; display: flex; flex-direction: column; align-items: center">
+<span style="font-size: 12px; font-weight: 700; white-space: nowrap">Iron Yard Gym</span>
+<span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #C8FF3E; font-family: 'Chakra Petch', sans-serif">RAID OPEN</span>
+</div>
+<div style="width: 58px; height: 64px; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #C8FF3E; display: flex; align-items: center; justify-content: center; color: #0B0F1A"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: #0B0F1A; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"></path></svg></div>
+<div style="width: 14px; height: 38px; background: linear-gradient(180deg, #C8FF3E, rgba(200, 255, 62, 0.1))"></div>
+<div style="width: 70px; height: 18px; border-radius: 50%; background: rgba(200, 255, 62, 0.25); border: 2px solid rgba(200, 255, 62, 0.7); margin-top: -10px"></div>
+</a>
+</sc-if>
+<sc-for list="{{spawns}}" as="s" hint-placeholder-count="7">
+<div style="position: absolute; left: {{s.x}}px; top: {{s.y}}px; transform: translate(-50%, -100%) scale({{s.s}}); transform-origin: 50% 100%; display: flex; flex-direction: column; align-items: center; gap: 5px">
+<div style="padding: 3px 9px; border-radius: 10px; background: rgba(11, 15, 26, 0.88); border: 1px solid {{s.color}}; display: flex; flex-direction: column; align-items: center">
+<span style="font-size: 12px; font-weight: 700; white-space: nowrap">{{s.label}}</span>
+<span style="font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: {{s.color}}; font-family: 'Chakra Petch', sans-serif">{{s.tier}}</span>
+</div>
+<div style="width: 60px; height: 67px; filter: {{s.glow}}">
+<div style="width: 100%; height: 100%; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: {{s.color}}; display: flex; align-items: center; justify-content: center">
+<div style="width: 52px; height: 58px; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #10172A; display: flex; align-items: center; justify-content: center; color: {{s.color}}">
+<svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="{{s.icon}}"></path></svg>
+</div>
+</div>
+</div>
+<div style="width: 46px; height: 12px; border-radius: 50%; background: {{s.color}}; opacity: 0.35; margin-top: -8px"></div>
+</div>
+</sc-for>
+<svg width="170" height="170" viewBox="0 0 170 170" aria-hidden="true" style="position: absolute; left: 110px; top: 440px">
+<defs><linearGradient id="cone" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#C8FF3E" stop-opacity="0.55"></stop><stop offset="1" stop-color="#C8FF3E" stop-opacity="0"></stop></linearGradient></defs>
+<path d="M85 160 L25 10 Q85 -10 145 10 Z" style="fill: url(#cone)"></path>
+</svg>
+<div style="position: absolute; left: 125px; top: 577px; width: 140px; height: 46px; border-radius: 50%; border: 2px solid rgba(200, 255, 62, 0.45); background: rgba(200, 255, 62, 0.08)"></div>
+<div style="position: absolute; left: 155px; top: 588px; width: 80px; height: 24px; border-radius: 50%; border: 2px solid rgba(200, 255, 62, 0.8)"></div>
+<div style="position: absolute; left: 169px; top: 570px; width: 52px; height: 52px; box-sizing: border-box; border-radius: 50%; background: #C8FF3E; border: 4px solid #0B0F1A; box-shadow: 0 0 0 3px rgba(200, 255, 62, 0.5), 0 10px 24px rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center">
+<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" style="fill: #0B0F1A"><path d="M12 3l7 17-7-4-7 4z"></path></svg>
+</div>
+<div style="position: absolute; left: 16px; right: 16px; top: 20px; display: flex; align-items: center; gap: 10px">
+<a href="Profile.dc.html" aria-label="Trainer profile, level 24" style="display: flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; border-radius: 18px; background: rgba(21, 27, 44, 0.92); border: 1px solid #2B3552; text-decoration: none; color: #F3F5FA">
+<div style="width: 40px; height: 45px; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #C8FF3E; display: flex; align-items: center; justify-content: center; color: #0B0F1A; font-weight: 700; font-size: 14px; font-family: 'Chakra Petch', sans-serif">VR</div>
+<div style="display: flex; flex-direction: column; gap: 4px; width: 64px">
+<span style="font-size: 13px; font-weight: 700; font-family: 'Chakra Petch', sans-serif">LV 24</span>
+<div style="height: 5px; border-radius: 999px; background: #2B3552; overflow: hidden"><div style="width: 84%; height: 100%; border-radius: 999px; background: #C8FF3E"></div></div>
+</div>
+</a>
+<a href="Street.dc.html" style="flex-grow: 1; height: 57px; box-sizing: border-box; padding: 0 12px; border-radius: 18px; background: rgba(21, 27, 44, 0.92); border: 1px solid #2B3552; display: flex; flex-direction: column; justify-content: center; gap: 2px; text-decoration: none; color: #F3F5FA">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C8FF3E"></span>Street Mode</span>
+<span style="font-size: 11px; color: #A3ACC2">Run &amp; walk missions live</span>
+</a>
+<button aria-label="Compass, tap to face north" style="width: 57px; height: 57px; border-radius: 18px; background: rgba(21, 27, 44, 0.92); border: 1px solid #2B3552; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer">
+<svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true" style="transform: rotate({{worldRot}}deg)"><path d="M17 3 L22 17 L17 15 L12 17 Z" style="fill: #FF4D8D"></path><path d="M17 31 L22 17 L17 19 L12 17 Z" style="fill: #A3ACC2"></path></svg>
+</button>
+</div>
+<div style="position: absolute; left: 16px; top: 638px; width: 176px; box-sizing: border-box; padding: 10px 12px; border-radius: 16px; background: rgba(21, 27, 44, 0.94); border: 1px solid #2B3552; display: flex; flex-direction: column; gap: 6px">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: #C8FF3E; font-family: 'Chakra Petch', sans-serif"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: #C8FF3E; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M14 4a2 2 0 1 0 4 0a2 2 0 1 0-4 0M15 7l-3 5 4 3-1 6M12 12l-5 1M15 7l3 4 3-1M12 12l-2 5-5 1"></path></svg>ACTIVE MISSION</span>
+<span style="font-size: 13px; font-weight: 700">Lap the Riverside</span>
+<div style="height: 6px; border-radius: 999px; background: #2B3552; overflow: hidden"><div style="width: 62%; height: 100%; border-radius: 999px; background: #C8FF3E"></div></div>
+<span style="font-size: 11px; color: #A3ACC2">1.24 of 2.0 km</span>
+</div>
+<div style="position: absolute; right: 16px; top: 638px; width: 166px; box-sizing: border-box; padding: 10px 12px; border-radius: 16px; background: rgba(21, 27, 44, 0.94); border: 1px solid #2B3552; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: #A3ACC2; font-family: 'Chakra Petch', sans-serif">NEARBY</span>
+<div style="display: flex; align-items: center; gap: 8px"><div style="flex-shrink: 0; width: 20px; height: 22px; "><div style="width: 100%; height: 100%; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #FF4D8D; display: flex; align-items: center; justify-content: center"><div style="width: calc(100% - 6px); height: calc(100% - 7px); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #10172A; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: #FF4D8D; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M2 3h9M6.5 3v6M6.5 9H22M2.4 9a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0"></path></svg></div></div></div><span style="flex-grow: 1; font-size: 12px; font-weight: 700; white-space: nowrap">Front Lever</span><span style="font-size: 11px; color: #A3ACC2">180 m</span></div><div style="display: flex; align-items: center; gap: 8px"><div style="flex-shrink: 0; width: 20px; height: 22px; "><div style="width: 100%; height: 100%; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #FFB229; display: flex; align-items: center; justify-content: center"><div style="width: calc(100% - 6px); height: calc(100% - 7px); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #10172A; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: #FFB229; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M3 13h18M8.5 13l1.5-5M15.5 13L14 8M10 8h4M12 8v8M12 16l-2 5M12 16l2 5M10.4 4.5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0"></path></svg></div></div></div><span style="flex-grow: 1; font-size: 12px; font-weight: 700; white-space: nowrap">Muscle-up</span><span style="font-size: 11px; color: #A3ACC2">240 m</span></div><div style="display: flex; align-items: center; gap: 8px"><div style="flex-shrink: 0; width: 20px; height: 22px; "><div style="width: 100%; height: 100%; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #4AA8FF; display: flex; align-items: center; justify-content: center"><div style="width: calc(100% - 6px); height: calc(100% - 7px); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #10172A; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: #4AA8FF; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M3 3h18M8 3l2 6M16 3l-2 6M10.5 7.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0M12 9.5V16M12 16l-2 5M12 16l2 5"></path></svg></div></div></div><span style="flex-grow: 1; font-size: 12px; font-weight: 700; white-space: nowrap">Pull-ups</span><span style="font-size: 11px; color: #A3ACC2">95 m</span></div>
+</div>
+<nav aria-label="Main" style="position: absolute; left: 0; right: 0; bottom: 14px; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 40px">
+<a href="Dex.dc.html" style="width: 60px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #F3F5FA; font-size: 11px; font-weight: 700"><span style="width: 52px; height: 52px; border-radius: 50%; background: #151B2C; border: 1px solid #2B3552; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"></path></svg></span>FitDex</a>
+<a href="Encounter.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #0B0F1A">
+<span style="width: 76px; height: 85px; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: #C8FF3E; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; font-family: 'Chakra Petch', sans-serif"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: #0B0F1A; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"></path></svg>TRAIN</span>
+</a>
+<a href="Battle.dc.html" style="width: 60px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #F3F5FA; font-size: 11px; font-weight: 700"><span style="width: 52px; height: 52px; border-radius: 50%; background: #151B2C; border: 1px solid #2B3552; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M4 4l10 10M4 4v4M4 4h4M20 4L10 14M20 4v4M20 4h-4M7 13l4 4M17 13l-4 4M5 20l3-3M19 20l-3-3"></path></svg></span>Arena</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"heading": {"editor": "range", "min": 0, "max": 355, "step": 5, "unit": "°", "default": 0, "section": "Player"}, "$preview": {"width": 390, "height": 844}}'>
+class Component extends DCLogic {
+renderVals() {
+const heading = Number(this.props.heading ?? 0);
+const rot = -heading * Math.PI / 180;
+const tilt = 50 * Math.PI / 180, d = 1800, ox = 195, oy = 600;
+const ICON = {"pushup": "M2 10a2 2 0 1 0 4 0a2 2 0 1 0-4 0M6.5 11l14.5 4M9 11.8V18M21 15v3M2 20h20", "squat": "M10 4a2 2 0 1 0 4 0a2 2 0 1 0-4 0M12 6.5l-2 5.5h6l-1 8M12 8.5h7M4 20h16", "pullup": "M3 3h18M8 3l2 6M16 3l-2 6M10.5 7.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0M12 9.5V16M12 16l-2 5M12 16l2 5", "frontlever": "M2 3h9M6.5 3v6M6.5 9H22M2.4 9a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0", "muscleup": "M3 13h18M8.5 13l1.5-5M15.5 13L14 8M10 8h4M12 8v8M12 16l-2 5M12 16l2 5M10.4 4.5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0", "run": "M14 4a2 2 0 1 0 4 0a2 2 0 1 0-4 0M15 7l-3 5 4 3-1 6M12 12l-5 1M15 7l3 4 3-1M12 12l-2 5-5 1", "burpee": "M10 3a2 2 0 1 0 4 0a2 2 0 1 0-4 0M12 6v7M12 7l-5-3M12 7l5-3M12 13l-3 6M12 13l3 6M4 22h16"};
+const COLOR = {"common": "#B4BCCB", "uncommon": "#34D8B0", "rare": "#4AA8FF", "epic": "#B07CFF", "legendary": "#FFB229", "mythic": "#FF4D8D", "mission": "#C8FF3E"};
+const NAME = {"common": "Common", "uncommon": "Uncommon", "rare": "Rare", "epic": "Epic", "legendary": "Legendary", "mythic": "Mythic", "mission": "Mission"};
+const proj = (wx, wy) => {
+  const xr = wx * Math.cos(rot) - wy * Math.sin(rot);
+  const yr = wx * Math.sin(rot) + wy * Math.cos(rot);
+  const z = yr * Math.sin(tilt);
+  const s = d / (d - z);
+  return { x: Math.round(ox + xr * s), y: Math.round(oy + yr * Math.cos(tilt) * s), s: Math.round(s * 1000) / 1000 };
+};
+const raw = [
+  { label: 'Push-ups ×20', r: 'common', icon: 'pushup', wx: -140, wy: -200 },
+  { label: 'Squats ×25', r: 'common', icon: 'squat', wx: 150, wy: -260 },
+  { label: 'Sprint 800 m', r: 'mission', icon: 'run', wx: 0, wy: -330 },
+  { label: 'Pull-ups ×8', r: 'rare', icon: 'pullup', wx: -150, wy: -470 },
+  { label: 'Burpees ×15', r: 'uncommon', icon: 'burpee', wx: 170, wy: -640 },
+  { label: 'Front Lever', r: 'mythic', icon: 'frontlever', wx: -40, wy: -700 },
+  { label: 'Muscle-up ×3', r: 'legendary', icon: 'muscleup', wx: 150, wy: -900 },
+  { label: 'Squats ×25', r: 'common', icon: 'squat', wx: 420, wy: -300 },
+  { label: 'Push-ups ×20', r: 'common', icon: 'pushup', wx: -420, wy: -380 },
+  { label: 'Pull-ups ×8', r: 'rare', icon: 'pullup', wx: 380, wy: -620 },
+  { label: 'Burpees ×15', r: 'uncommon', icon: 'burpee', wx: -380, wy: -760 },
+  { label: 'Push-ups ×20', r: 'common', icon: 'pushup', wx: 280, wy: 60 },
+  { label: 'Sprint 400 m', r: 'mission', icon: 'run', wx: 560, wy: -60 },
+  { label: 'Pistol Squat', r: 'epic', icon: 'squat', wx: 820, wy: 120 },
+  { label: 'Burpees ×15', r: 'uncommon', icon: 'burpee', wx: -300, wy: -40 },
+  { label: 'Squats ×25', r: 'common', icon: 'squat', wx: -600, wy: 80 },
+  { label: 'Pull-ups ×8', r: 'rare', icon: 'pullup', wx: -850, wy: -60 },
+  { label: 'Push-ups ×20', r: 'common', icon: 'pushup', wx: -60, wy: 320 },
+  { label: 'Walk 1 km', r: 'mission', icon: 'run', wx: 100, wy: 600 },
+  { label: 'Muscle-up ×3', r: 'legendary', icon: 'muscleup', wx: -150, wy: 900 }
+];
+const spawns = raw.map((p) => {
+  const q = proj(p.wx, p.wy);
+  const c = COLOR[p.r];
+  const big = p.r === 'mythic' || p.r === 'legendary';
+  return { label: p.label, tier: NAME[p.r], color: c, icon: ICON[p.icon], x: q.x, y: q.y, s: q.s,
+    glow: big ? 'drop-shadow(0 0 14px ' + c + ')' : 'none' };
+}).filter((p) => p.y > 100 && p.y < 585 && p.x > 24 && p.x < 366).sort((a, b) => a.y - b.y);
+const g = proj(-100, -980);
+return { worldRot: -heading, spawns: spawns, gym: g, showGym: g.y > 100 && g.y < 585 && g.x > 24 && g.x < 366 };
+}
+}
+</script>
+</body>
+</html>

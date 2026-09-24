@@ -1,0 +1,129 @@
+{
+ "v": 3,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-09-24T18:54:37Z"
+ },
+ "title": "FitMon GO",
+ "launch": {
+  "view": "canvas"
+ },
+ "pages": [],
+ "boards": {
+  "Main.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1440,
+   "h": 900,
+   "title": "Pitch hero"
+  },
+  "HowItPlays.dc.html": {
+   "x": 1520,
+   "y": 0,
+   "w": 1440,
+   "h": 900,
+   "title": "How it plays"
+  },
+  "Map.dc.html": {
+   "x": 0,
+   "y": 1320,
+   "w": 390,
+   "h": 844,
+   "title": "01 · Explore map (world rotates with you)",
+   "radius": 44,
+   "is_interactive": true
+  },
+  "Encounter.dc.html": {
+   "x": 470,
+   "y": 1320,
+   "w": 390,
+   "h": 844,
+   "title": "02 · Mythic encounter",
+   "radius": 44,
+   "is_interactive": true
+  },
+  "Street.dc.html": {
+   "x": 940,
+   "y": 1320,
+   "w": 390,
+   "h": 844,
+   "title": "03 · Street Mode missions",
+   "radius": 44,
+   "is_interactive": true
+  },
+  "Gym.dc.html": {
+   "x": 1410,
+   "y": 1320,
+   "w": 390,
+   "h": 844,
+   "title": "04 · Gym Mode raid",
+   "radius": 44,
+   "is_interactive": true
+  },
+  "Dex.dc.html": {
+   "x": 1880,
+   "y": 1320,
+   "w": 390,
+   "h": 844,
+   "title": "05 · FitDex collection",
+   "radius": 44,
+   "is_interactive": true
+  },
+  "Profile.dc.html": {
+   "x": 2350,
+   "y": 1320,
+   "w": 390,
+   "h": 844,
+   "title": "06 · Trainer stats",
+   "radius": 44,
+   "is_interactive": true
+  },
+  "Battle.dc.html": {
+   "x": 2820,
+   "y": 1320,
+   "w": 390,
+   "h": 844,
+   "title": "07 · Online battle",
+   "radius": 44,
+   "is_interactive": true
+  },
+  "Finisher.dc.html": {
+   "x": 3290,
+   "y": 1320,
+   "w": 390,
+   "h": 844,
+   "title": "08 · Finisher unlocked",
+   "radius": 44,
+   "is_interactive": true
+  }
+ },
+ "order": [
+  "Main.dc.html",
+  "HowItPlays.dc.html",
+  "Map.dc.html",
+  "Encounter.dc.html",
+  "Street.dc.html",
+  "Gym.dc.html",
+  "Dex.dc.html",
+  "Profile.dc.html",
+  "Battle.dc.html",
+  "Finisher.dc.html"
+ ],
+ "notes": {
+  "t1": {
+   "x": 0,
+   "y": -300,
+   "text": "FitMon GO: pitch visuals",
+   "kind": "title1",
+   "maxW": 2960
+  },
+  "t2": {
+   "x": 0,
+   "y": 1060,
+   "text": "App screens (press Play to click through)",
+   "kind": "title1",
+   "maxW": 3680
+  }
+ },
+ "designSystems": []
+}
