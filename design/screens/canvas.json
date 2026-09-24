@@ -129,6 +129,15 @@
    "title": "11 · Street duel result + steal",
    "radius": 44,
    "is_interactive": true
+  },
+  "Deck.dc.html": {
+   "x": 2350,
+   "y": 2544,
+   "w": 390,
+   "h": 844,
+   "title": "12 · Battle deck",
+   "radius": 44,
+   "is_interactive": true
   }
  },
  "order": [
@@ -145,7 +154,8 @@
   "Finisher.dc.html",
   "DuelInvite.dc.html",
   "DuelLive.dc.html",
-  "DuelResult.dc.html"
+  "DuelResult.dc.html",
+  "Deck.dc.html"
  ],
  "notes": {
   "t1": {

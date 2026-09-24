@@ -320,7 +320,7 @@ map_body = T("""<div style="[[PHONE]]">
 </sc-for>
 <sc-if value="{{showRival}}" hint-placeholder-val="{{true}}">
 <a href="DuelInvite.dc.html" style="position: absolute; left: {{rival.x}}px; top: {{rival.y}}px; transform: translate(-50%, -100%) scale({{rival.s}}); transform-origin: 50% 100%; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #22203A">
-<span style="position: relative; padding: 5px 12px; border-radius: 16px; background: #22203A; color: #FFFFFF; font-size: 12px; font-weight: 800; white-space: nowrap">Maya wants to duel!</span>
+<span style="position: relative; padding: 5px 12px; border-radius: 16px; background: #22203A; color: #FFFFFF; font-size: 12px; font-weight: 800; white-space: nowrap">Mihir wants to duel!</span>
 <span style="width: 50px; height: 50px; box-sizing: border-box; border-radius: 50%; background: #FF7A59; border: 4px solid #FFFFFF; box-shadow: 0 3px 0 rgba(34, 32, 58, 0.18); display: flex; align-items: center; justify-content: center; color: #22203A; font-size: 18px; font-weight: 700; font-style: italic; [[FD]]">M</span>
 <span style="width: 40px; height: 10px; border-radius: 50%; background: rgba(34, 32, 58, 0.16); margin-top: -6px"></span>
 </a>
@@ -340,7 +340,7 @@ map_body = T("""<div style="[[PHONE]]">
 </a>
 <a href="Street.dc.html" style="flex-grow: 1; height: 56px; box-sizing: border-box; padding: 0 14px; border-radius: 999px; [[CARD]]; display: flex; flex-direction: column; justify-content: center; text-decoration: none; color: #22203A; line-height: 1.15">
 <span style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 900"><span style="width: 9px; height: 9px; border-radius: 50%; background: #1A9A63"></span>Street mode</span>
-<span style="font-size: 12px; font-weight: 700; color: #6E6878">Run &amp; walk missions on</span>
+<span style="font-size: 12px; font-weight: 700; color: #6E6878">Run &amp; walk missions</span>
 </a>
 <button aria-label="Compass, tap to face north" style="flex-shrink: 0; width: 56px; height: 56px; box-sizing: border-box; border-radius: 50%; [[CARD]]; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer">
 <svg width="32" height="32" viewBox="0 0 34 34" aria-hidden="true" style="transform: rotate({{worldRot}}deg)"><path d="M17 3 L22 17 L17 15 L12 17 Z" style="fill: #FF7A59; stroke: #FF7A59; stroke-width: 2; stroke-linejoin: round"></path><path d="M17 31 L22 17 L17 19 L12 17 Z" style="fill: #D6CCBC; stroke: #D6CCBC; stroke-width: 2; stroke-linejoin: round"></path></svg>
@@ -522,38 +522,163 @@ files["Gym.dc.html"] = page("Gym mode", gym_body, 390, 844)
 # =====================================================================
 # FITDEX
 # =====================================================================
-# What this trainer actually owns: a pyramid, rarest on top.
-owned = [
-    ("mythic", [("planche", "Planche")]),
-    ("legendary", [("muscleup", "Muscle-up")]),
-    ("epic", [("squat", "Pistol Squat"), ("lsit", "L-sit")]),
-    ("rare", [("pullup", "Pull-ups"), ("pushup", "Diamond Push-ups"), ("frontlever", "Tuck Lever")]),
-    ("uncommon", [("burpee", "Burpees"), ("dumbbell", "Dips"), ("squat", "Jump Squats"), ("walk", "Step-ups")]),
-    ("common", [("pushup", "Push-ups"), ("squat", "Squats"), ("walk", "Lunges"), ("pushup", "Plank"), ("burpee", "Sit-ups")]),
+# What this trainer owns, rarest first. Each FitMon gives a buff and a move.
+# (id, name, icon, buff, buff effect, move, move effect)
+COLLECTION = [
+    ("mythic", [("planche", "Planche", "planche", "Gravity Lock", "+15% Control in every duel", "Planche Press", "90 dmg, can't be blocked")]),
+    ("legendary", [("muscleup", "Muscle-up", "muscleup", "Sky High", "+10% Power in every duel", "Skybreaker", "Finisher · 220 dmg, breaks guard")]),
+    ("epic", [("pistol", "Pistol Squat", "squat", "Pistol Power", "+5 s in squat holds", "Pistol Stomp", "70 dmg, slows the opponent"),
+              ("lsit", "L-sit", "lsit", "Iron Core", "+20% guard strength", "L-sit Lock", "Blocks the next hit")]),
+    ("rare", [("pullups", "Pull-ups", "pullup", "Grip Strength", "+8% Strength", "Pull Through", "55 dmg, always goes first"),
+              ("diamond", "Diamond Push-ups", "pushup", "Diamond Grip", "Every 5th rep counts double in races", "Diamond Jab", "2 hits of 28 dmg"),
+              ("tuck", "Tuck Lever", "frontlever", "Lever Up", "+5% Control", "Tuck Spin", "40 dmg, dodge the next hit"),
+              ("chinups", "Chin-ups", "pullup", "Bicep Boost", "+6% Strength", "Chin Check", "45 dmg")]),
+    ("uncommon", [("burpees", "Burpees", "burpee", "Burst", "+1 s head start in sprints", "Burpee Blast", "35 dmg, heal 20"),
+                  ("climbers", "Mountain Climbers", "run", "Second Wind", "Heal 80 once per duel", "Second Wind", "Heal 80, 2 uses"),
+                  ("dips", "Dips", "dumbbell", "Tricep Tension", "+4% Strength", "Dip Drop", "30 dmg"),
+                  ("jumpsq", "Jump Squats", "squat", "Spring Legs", "+4% Speed", "Jump Stomp", "32 dmg"),
+                  ("stepups", "Step-ups", "walk", "Stair Master", "+4% Endurance", "Step Kick", "28 dmg"),
+                  ("boxjumps", "Box Jumps", "burpee", "Spring Loaded", "+5% Speed", "Box Bounce", "30 dmg, hits first"),
+                  ("wallsit", "Wall Sit", "squat", "Iron Legs", "+4 s in squat holds", "Wall Brace", "Take 25% less")]),
+    ("common", [("pushups", "Push-ups", "pushup", "Quick Hands", "+3 rep head start in races", "Power Push", "60 dmg"),
+                ("running", "Running", "run", "Tailwind", "−0.3 s in sprints", "Tempo Dash", "25 dmg, hits first"),
+                ("plank", "Plank", "pushup", "Brace Up", "+10% guard", "Core Brace", "Take 40% less"),
+                ("squats", "Squats", "squat", "Leg Day", "+3% Endurance", "Squat Slam", "30 dmg"),
+                ("lunges", "Lunges", "walk", "Long Stride", "+3% Speed", "Lunge Strike", "26 dmg"),
+                ("situps", "Sit-ups", "burpee", "Crunch Time", "+3% Control", "Crunch Kick", "24 dmg"),
+                ("jacks", "Jumping Jacks", "burpee", "Warm Up", "+2% Speed", "Jack Jab", "20 dmg"),
+                ("calves", "Calf Raises", "walk", "Spring Heels", "+2% Speed", "Heel Tap", "18 dmg"),
+                ("bridge", "Glute Bridge", "squat", "Hip Drive", "+3% Power", "Bridge Buck", "22 dmg")]),
 ]
-tiers = []
-k = 0
-for r, items in owned:
-    cells = []
-    for icon, name in items:
-        badge = ('<span style="position: absolute; right: -6px; top: -6px; padding: 1px 6px; border-radius: 999px; background: #FF7A59; color: #22203A; font-size: 10px; font-weight: 900">new</span>') if name == "Burpees" else ""
-        cells.append(T('<div style="width: 66px; display: flex; flex-direction: column; align-items: center; gap: 4px"><span style="position: relative">[[t]][[b]]</span><span style="font-size: 11px; font-weight: 800; line-height: 1.1; text-align: center">[[n]]</span></div>',
-                       t=token(r, icon, 40, v=k, sparkles=False), b=badge, n=name))
-        k += 1
-    tiers.append(T('<div style="display: flex; flex-direction: column; align-items: center; gap: 5px"><span style="display: flex; align-items: center; gap: 6px">[[p]]<span style="font-size: 12px; font-weight: 800; color: #6E6878">[[c]] caught</span></span><div style="display: flex; justify-content: center; gap: 4px">[[cells]]</div></div>',
-                   p=pill(r, 11), c=len(items), cells="".join(cells)))
+dex_data = [{"r": r, "items": [{"id": i[0], "name": i[1], "icon": ICONS[i[2]], "buff": i[3], "buffEff": i[4], "move": i[5], "moveEff": i[6], "isNew": i[0] == "burpees"} for i in items]} for r, items in COLLECTION]
+dex_script = """renderVals() {
+const DATA = """ + json.dumps(dex_data, ensure_ascii=False) + """;
+const RAR = """ + js_rar + """;
+const SHAPES = """ + json.dumps(BLOBS) + """;
+const st = this.state || {};
+const selId = st.sel || 'muscleup';
+let sel = null, k = 0, total = 0;
+const tiers = DATA.map((t) => {
+  const c = RAR[t.r];
+  total += t.items.length;
+  return { name: c.name, fill: c.fill, mark: c.mark, text: c.text, count: t.items.length,
+    items: t.items.map((it) => {
+      const on = it.id === selId;
+      const o = Object.assign({}, it, { fill: c.fill, mark: c.mark, text: c.text, tier: c.name, shape: SHAPES[(k++) % 4],
+        bg: on ? '#FFF1CC' : 'transparent', ring: on ? '#FFCB47' : 'transparent', pressed: on,
+        pick: () => this.setState({ sel: it.id }) });
+      if (on) sel = o;
+      return o;
+    }) };
+});
+return { tiers: tiers, sel: sel, total: total };
+}"""
 dex_body = T("""<div style="[[PHONE]]">
 <div style="position: absolute; right: -40px; top: -50px; width: 190px; height: 170px; border-radius: 58% 42% 55% 45% / 52% 58% 42% 48%; background: #FFE9C2"></div>
-<div style="position: relative; padding: 22px 16px 0; display: flex; flex-direction: column; gap: 16px">
+<div style="position: relative; padding: 20px 16px 0; display: flex; flex-direction: column; gap: 12px">
 <div style="display: flex; align-items: flex-end; justify-content: space-between">
-<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 38px; line-height: 1; font-weight: 700; [[FD]]">FitDex</span><span style="font-size: 14px; font-weight: 700; color: #6E6878">Your collection, rarest at the top</span></div>
-<span style="display: flex; flex-direction: column; align-items: flex-end; line-height: 1"><span style="font-size: 34px; font-weight: 700; [[FD]]">16</span><span style="font-size: 12px; font-weight: 800; color: #6E6878">FitMon</span></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 36px; line-height: 1; font-weight: 700; [[FD]]">FitDex</span><span style="font-size: 13px; font-weight: 700; color: #6E6878">Tap a FitMon to see what it gives you</span></div>
+<span style="display: flex; flex-direction: column; align-items: flex-end; line-height: 1"><span style="font-size: 32px; font-weight: 700; [[FD]]">{{total}}</span><span style="font-size: 12px; font-weight: 800; color: #6E6878">FitMon</span></span>
 </div>
-<div style="padding: 14px 8px 16px; border-radius: 28px; [[CARD]]; display: flex; flex-direction: column; gap: 10px">[[TIERS]]</div>
+<div style="padding: 14px; border-radius: 26px; background: {{sel.fill}}; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="flex-shrink: 0; width: 62px; height: 62px; box-sizing: border-box; border-radius: {{sel.shape}}; background: #FFFFFF; border: 3px solid {{sel.mark}}; display: flex; align-items: center; justify-content: center; color: {{sel.mark}}"><svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="{{sel.icon}}"></path></svg></span>
+<span style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 24px; line-height: 1; font-weight: 700; [[FD]]">{{sel.name}}</span><span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px 3px 8px; border-radius: 999px; background: #FFFFFF; color: {{sel.text}}; font-size: 11px; font-weight: 800"><span style="width: 7px; height: 7px; border-radius: 50%; background: {{sel.mark}}"></span>{{sel.tier}}</span></span>
+<a href="Deck.dc.html" style="flex-shrink: 0; padding: 8px 12px; border-radius: 999px; background: #22203A; color: #FFFFFF; font-size: 12px; font-weight: 900; text-decoration: none">Edit deck</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<div style="padding: 8px 10px; border-radius: 16px; background: #FFFFFF; display: flex; flex-direction: column; gap: 1px"><span style="display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; color: #6E6878">[[BOLT]]Buff</span><span style="font-size: 14px; font-weight: 900">{{sel.buff}}</span><span style="font-size: 12px; font-weight: 700; color: #4A4458; line-height: 1.25">{{sel.buffEff}}</span></div>
+<div style="padding: 8px 10px; border-radius: 16px; background: #FFFFFF; display: flex; flex-direction: column; gap: 1px"><span style="display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; color: #6E6878">[[SW]]Move</span><span style="font-size: 14px; font-weight: 900">{{sel.move}}</span><span style="font-size: 12px; font-weight: 700; color: #4A4458; line-height: 1.25">{{sel.moveEff}}</span></div>
+</div>
+</div>
+<div style="padding: 10px 0 10px 12px; border-radius: 26px; [[CARD]]; display: flex; flex-direction: column; gap: 4px">
+<sc-for list="{{tiers}}" as="t" hint-placeholder-count="6">
+<div style="display: flex; align-items: center; gap: 6px">
+<span style="flex-shrink: 0; width: 84px; display: flex; flex-direction: column; align-items: flex-start; gap: 3px"><span style="display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px 3px 7px; border-radius: 999px; background: {{t.fill}}; color: {{t.text}}; font-size: 11px; font-weight: 800"><span style="width: 7px; height: 7px; border-radius: 50%; background: {{t.mark}}"></span>{{t.name}}</span><span style="font-size: 11px; font-weight: 700; color: #6E6878; padding-left: 4px">{{t.count}} caught</span></span>
+<div style="position: relative; flex-grow: 1; min-width: 0">
+<div style="display: flex; gap: 2px; overflow-x: auto; padding: 2px 30px 2px 0; scrollbar-width: none">
+<sc-for list="{{t.items}}" as="it" hint-placeholder-count="4">
+<button onClick="{{it.pick}}" aria-pressed="{{it.pressed}}" aria-label="{{it.name}}" style="position: relative; flex-shrink: 0; width: 60px; box-sizing: border-box; padding: 4px 2px; border-radius: 16px; background: {{it.bg}}; border: 2px solid {{it.ring}}; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; color: #22203A">
+<span style="width: 38px; height: 38px; box-sizing: border-box; border-radius: {{it.shape}}; background: {{it.fill}}; border: 2px solid {{it.mark}}; display: flex; align-items: center; justify-content: center; color: {{it.mark}}"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="{{it.icon}}"></path></svg></span>
+<span style="width: 54px; font-size: 10px; font-weight: 800; line-height: 1.1; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{it.name}}</span>
+<sc-if value="{{it.isNew}}" hint-placeholder-val="{{false}}"><span style="position: absolute; right: 0; top: 0; padding: 0 5px; border-radius: 999px; background: #FF7A59; font-size: 9px; font-weight: 900">new</span></sc-if>
+</button>
+</sc-for>
+</div>
+<span style="position: absolute; right: 0; top: 0; bottom: 0; width: 34px; background: linear-gradient(90deg, rgba(255, 255, 255, 0), #FFFFFF 80%); pointer-events: none"></span>
+</div>
+</div>
+</sc-for>
+</div>
 </div>
 [[NAV]]
-</div>""", PHONE=PHONE, FD=FD, CARD=CARDSTYLE, TIERS="".join(tiers), NAV=navbar("FitDex"))
-files["Dex.dc.html"] = page("FitDex collection", dex_body, 390, 844)
+</div>""", PHONE=PHONE, FD=FD, CARD=CARDSTYLE, BOLT=ic("bolt", 12, MUTED), SW=ic("swords", 12, MUTED), NAV=navbar("FitDex"))
+files["Dex.dc.html"] = page("FitDex collection", dex_body, 390, 844, dex_script)
+
+# =====================================================================
+# BATTLE DECK (pick the moves you fight with)
+# =====================================================================
+DECK_MOVES = []
+for r, items in COLLECTION:
+    for it in items:
+        if it[0] == "muscleup":
+            continue  # its move is the finisher, which has its own slot
+        pw = int(re.search(r"(\d+)", it[6]).group(1)) if re.search(r"\d+ dmg", it[6]) else 45
+        DECK_MOVES.append({"id": it[0], "name": it[5], "src": it[1], "r": r, "icon": ICONS[it[2]], "eff": it[6], "power": pw})
+deck_script = """renderVals() {
+const MOVES = """ + json.dumps(DECK_MOVES, ensure_ascii=False) + """;
+const RAR = """ + js_rar + """;
+const SHAPES = """ + json.dumps(BLOBS) + """;
+const byId = {};
+MOVES.forEach((m) => { byId[m.id] = m; });
+const st = this.state || {};
+const deck = st.deck || ['pushups', 'running', 'plank', 'climbers'];
+const slot = st.slot === undefined ? 1 : st.slot;
+const dress = (m, i) => { const c = RAR[m.r]; return Object.assign({}, m, { fill: c.fill, mark: c.mark, text: c.text, tier: c.name, shape: SHAPES[i % 4] }); };
+const slots = deck.map((id, i) => Object.assign(dress(byId[id], i), {
+  num: i + 1, border: i === slot ? '3px solid #FF7A59' : '2px solid #EFE4D3', edge: i === slot ? '#E0673F' : '#EADFCF', isSel: i === slot,
+  pick: () => this.setState({ deck: deck, slot: i }) }));
+const lib = MOVES.filter((m) => m.r !== 'common' || deck.indexOf(m.id) >= 0 || m.id === 'squats').map((m, i) => {
+  const inDeck = deck.indexOf(m.id) >= 0;
+  return Object.assign(dress(m, i), { inDeck: inDeck, canAdd: !inDeck,
+    add: () => { if (inDeck) return; const d = deck.slice(); d[slot] = m.id; this.setState({ deck: d, slot: slot }); } });
+});
+const power = deck.reduce((a, id) => a + byId[id].power, 0) + 220;
+return { slots: slots, lib: lib, power: power, slotNum: slot + 1, slotName: byId[deck[slot]].name };
+}"""
+deck_body = T("""<div style="[[PHONE]]; padding: 20px 16px; display: flex; flex-direction: column; gap: 12px">
+[[HEAD]]
+<div style="display: flex; align-items: baseline; justify-content: space-between"><span style="font-size: 20px; font-weight: 700; [[FD]]">Moves</span><span style="font-size: 12px; font-weight: 800; color: #6E6878">4 slots · tap one to swap it</span></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{slots}}" as="m" hint-placeholder-count="4">
+<button onClick="{{m.pick}}" aria-pressed="{{m.isSel}}" style="position: relative; height: 76px; box-sizing: border-box; padding: 8px 10px 8px 8px; border-radius: 22px; background: #FFFFFF; border: {{m.border}}; box-shadow: 0 3px 0 {{m.edge}}; display: flex; align-items: center; gap: 8px; text-align: left; cursor: pointer; color: #22203A">
+<span style="flex-shrink: 0; width: 40px; height: 40px; box-sizing: border-box; border-radius: {{m.shape}}; background: {{m.fill}}; border: 2px solid {{m.mark}}; display: flex; align-items: center; justify-content: center; color: {{m.mark}}"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="{{m.icon}}"></path></svg></span>
+<span style="min-width: 0; display: flex; flex-direction: column; line-height: 1.2"><span style="font-size: 14px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{m.name}}</span><span style="font-size: 11px; font-weight: 700; color: #6E6878; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{m.eff}}</span><span style="font-size: 11px; font-weight: 800; color: {{m.text}}">from {{m.src}}</span></span>
+<sc-if value="{{m.isSel}}" hint-placeholder-val="{{false}}"><span style="position: absolute; right: 8px; top: -9px; padding: 1px 8px; border-radius: 999px; background: #FF7A59; font-size: 10px; font-weight: 900">swapping</span></sc-if>
+</button>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<div style="padding: 10px; border-radius: 22px; background: #FFE9C2; display: flex; align-items: center; gap: 8px">[[FTOK]]<span style="display: flex; flex-direction: column; line-height: 1.2"><span style="font-size: 11px; font-weight: 800; color: #8F4A00">Finisher</span><span style="font-size: 15px; font-weight: 900">Skybreaker</span><span style="font-size: 11px; font-weight: 700; color: #6E5A3A">220 dmg</span></span></div>
+<div style="padding: 10px; border-radius: 22px; background: #FFE4DA; display: flex; align-items: center; gap: 8px"><span style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center">[[BOLT]]</span><span style="display: flex; flex-direction: column; line-height: 1.2"><span style="font-size: 11px; font-weight: 800; color: #B8431F">Power-up</span><span style="font-size: 15px; font-weight: 900">Adrenaline</span><span style="font-size: 11px; font-weight: 700; color: #6E5A4A">3 left</span></span></div>
+</div>
+<div style="display: flex; align-items: baseline; justify-content: space-between; margin-top: 2px"><span style="font-size: 20px; font-weight: 700; [[FD]]">Your moves</span><span style="font-size: 12px; font-weight: 800; color: #6E6878">Swapping slot {{slotNum}}: {{slotName}}</span></div>
+<div style="height: 318px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 2px; scrollbar-width: none">
+<sc-for list="{{lib}}" as="m" hint-placeholder-count="5">
+<div style="flex-shrink: 0; display: flex; align-items: center; gap: 10px; padding: 8px 10px 8px 8px; border-radius: 20px; [[CARD]]">
+<span style="flex-shrink: 0; width: 38px; height: 38px; box-sizing: border-box; border-radius: {{m.shape}}; background: {{m.fill}}; border: 2px solid {{m.mark}}; display: flex; align-items: center; justify-content: center; color: {{m.mark}}"><svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="{{m.icon}}"></path></svg></span>
+<span style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.2"><span style="font-size: 14px; font-weight: 900">{{m.name}}</span><span style="font-size: 11px; font-weight: 700; color: #6E6878; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{m.eff}} · <span style="color: {{m.text}}; font-weight: 800">{{m.tier}}</span></span></span>
+<sc-if value="{{m.canAdd}}" hint-placeholder-val="{{true}}"><button onClick="{{m.add}}" style="flex-shrink: 0; height: 34px; padding: 0 14px; border: 0; border-radius: 999px; background: #FFCB47; box-shadow: 0 3px 0 #E0A51A; font-size: 13px; font-weight: 900; color: #22203A; cursor: pointer">Swap in</button></sc-if>
+<sc-if value="{{m.inDeck}}" hint-placeholder-val="{{false}}"><span style="flex-shrink: 0; display: flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 999px; background: #D6F3E2; color: #13784C; font-size: 12px; font-weight: 900">[[CHK]]In deck</span></sc-if>
+</div>
+</sc-for>
+</div>
+[[SAVE]]
+</div>""", PHONE=PHONE, FD=FD, CARD=CARDSTYLE,
+    HEAD=header("Battle deck", "The moves you take into every fight", '<span style="display: flex; flex-direction: column; align-items: flex-end; line-height: 1"><span style="font-size: 24px; font-weight: 700; ' + FD + '">{{power}}</span><span style="font-size: 11px; font-weight: 800; color: #6E6878">deck power</span></span>', backlink("Back to FitDex", "Dex.dc.html")),
+    FTOK=token("legendary", "muscleup", 40, v=0, sparkles=False), BOLT=ic("bolt", 20, CORALTXT), CHK=ic("check", 13, "#13784C", 3),
+    SAVE=btn_primary("Save deck", "check", "Battle.dc.html", 54))
+files["Deck.dc.html"] = page("Battle deck", deck_body, 390, 844, deck_script)
 
 # =====================================================================
 # PROFILE
@@ -766,7 +891,7 @@ def set_row(i, s, state=None):
         badge = '<span style="padding: 3px 10px; border-radius: 999px; background: #D6F3E2; color: #13784C; font-size: 12px; font-weight: 900">Won</span>'
     elif state == "live":
         badge = '<span style="padding: 3px 10px; border-radius: 999px; background: #FFCB47; font-size: 12px; font-weight: 900">Live</span>'
-    return T('<div style="padding: 10px 12px; border-radius: 22px; [[CARD]]; display: flex; flex-direction: column; gap: 8px"><div style="display: flex; align-items: center; gap: 10px"><span style="flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: #FFE4DA; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; color: #B8431F; [[FD]]">[[n]]</span><span style="flex-grow: 1; display: flex; flex-direction: column; line-height: 1.15"><span style="font-size: 15px; font-weight: 900">[[name]]</span><span style="font-size: 12px; font-weight: 700; color: #6E6878">[[rule]]</span></span>[[badge]]</div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px"><span style="display: flex; align-items: center; gap: 6px; padding: 5px 8px; border-radius: 14px; background: [[mf]]; font-size: 11px; font-weight: 800; line-height: 1.2">[[mi]]<span>You: [[mb]] <span style="font-weight: 700; color: #4A4458">[[mbe]]</span></span></span><span style="display: flex; align-items: center; gap: 6px; padding: 5px 8px; border-radius: 14px; background: [[tf]]; font-size: 11px; font-weight: 800; line-height: 1.2">[[ti]]<span>Maya: [[tb]] <span style="font-weight: 700; color: #4A4458">[[tbe]]</span></span></span></div></div>',
+    return T('<div style="padding: 10px 12px; border-radius: 22px; [[CARD]]; display: flex; flex-direction: column; gap: 8px"><div style="display: flex; align-items: center; gap: 10px"><span style="flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: #FFE4DA; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; color: #B8431F; [[FD]]">[[n]]</span><span style="flex-grow: 1; display: flex; flex-direction: column; line-height: 1.15"><span style="font-size: 15px; font-weight: 900">[[name]]</span><span style="font-size: 12px; font-weight: 700; color: #6E6878">[[rule]]</span></span>[[badge]]</div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px"><span style="display: flex; align-items: center; gap: 6px; padding: 5px 8px; border-radius: 14px; background: [[mf]]; font-size: 11px; font-weight: 800; line-height: 1.2">[[mi]]<span>You: [[mb]] <span style="font-weight: 700; color: #4A4458">[[mbe]]</span></span></span><span style="display: flex; align-items: center; gap: 6px; padding: 5px 8px; border-radius: 14px; background: [[tf]]; font-size: 11px; font-weight: 800; line-height: 1.2">[[ti]]<span>Mihir: [[tb]] <span style="font-weight: 700; color: #4A4458">[[tbe]]</span></span></span></div></div>',
              CARD=CARDSTYLE, FD=FD, n=i + 1, name=name, rule=rule, badge=badge, mf=R[mr][3], mi=ic("bolt", 14, R[mr][2]), mb=mb, mbe=mbe,
              tf=R[tr][3], ti=ic("bolt", 14, R[tr][2]), tb=tb, tbe=tbe)
 
@@ -792,7 +917,7 @@ invite_body = T("""<div style="[[PHONE]]; padding: 20px 16px; display: flex; fle
 <div style="position: absolute; left: 236px; top: 52px">[[AV_MAYA]]</div>
 </div>
 <div style="display: flex; flex-direction: column; gap: 2px">
-<span style="font-size: 28px; line-height: 1.05; font-weight: 700; [[FD]]">Maya_lifts wants to <i>duel</i></span>
+<span style="font-size: 28px; line-height: 1.05; font-weight: 700; [[FD]]">Mihir_lifts wants to <i>duel</i></span>
 <span style="font-size: 14px; font-weight: 700; color: #6E6878">Lv 22 · 51 FitMon · best of 3 sets, 2 minutes</span>
 </div>
 [[S1]]
@@ -837,20 +962,20 @@ live_body = T("""<div style="[[PHONE]]; padding: 20px 16px; display: flex; flex-
 <div style="display: flex; align-items: baseline; justify-content: space-between"><span style="font-size: 24px; font-weight: 700; [[FD]]">Push-up <i>race</i></span><span style="display: flex; align-items: center; gap: 6px; font-size: 22px; font-weight: 700; color: #B8431F; [[FD]]">[[CLK]]0:12</span></div>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
 <div style="padding: 12px; border-radius: 22px; background: #FFF1CC; display: flex; flex-direction: column; align-items: center; gap: 2px">[[AV_ME]]<span style="font-size: 13px; font-weight: 900; margin-top: 4px">You</span><span style="font-size: 64px; line-height: 1; font-weight: 800; [[FD]]">18</span><span style="font-size: 12px; font-weight: 700; color: #6E6878">reps</span></div>
-<div style="padding: 12px; border-radius: 22px; background: #FFE4DA; display: flex; flex-direction: column; align-items: center; gap: 2px">[[AV_MAYA]]<span style="font-size: 13px; font-weight: 900; margin-top: 4px">Maya</span><span style="font-size: 64px; line-height: 1; font-weight: 800; [[FD]]">20</span><span style="font-size: 12px; font-weight: 700; color: #6E6878">reps</span></div>
+<div style="padding: 12px; border-radius: 22px; background: #FFE4DA; display: flex; flex-direction: column; align-items: center; gap: 2px">[[AV_MAYA]]<span style="font-size: 13px; font-weight: 900; margin-top: 4px">Mihir</span><span style="font-size: 64px; line-height: 1; font-weight: 800; [[FD]]">20</span><span style="font-size: 12px; font-weight: 700; color: #6E6878">reps</span></div>
 </div>
 </div>
 <span style="font-size: 20px; font-weight: 700; [[FD]]">This set&#39;s <i>buffs</i></span>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
 <div style="padding: 10px; border-radius: 22px; background: #DFE8FB; display: flex; flex-direction: column; gap: 6px">[[TOK_ME]]<span style="font-size: 14px; font-weight: 900">Diamond Grip</span><span style="font-size: 12px; font-weight: 700; color: #3A3550; line-height: 1.3">Every 5th rep counts double. From your Diamond Push-ups.</span></div>
-<div style="padding: 10px; border-radius: 22px; background: #E9EDF5; display: flex; flex-direction: column; gap: 6px">[[TOK_MAYA]]<span style="font-size: 14px; font-weight: 900">Quick Hands</span><span style="font-size: 12px; font-weight: 700; color: #3A3550; line-height: 1.3">Starts 3 reps ahead. From Maya&#39;s Push-ups.</span></div>
+<div style="padding: 10px; border-radius: 22px; background: #E9EDF5; display: flex; flex-direction: column; gap: 6px">[[TOK_MAYA]]<span style="font-size: 14px; font-weight: 900">Quick Hands</span><span style="font-size: 12px; font-weight: 700; color: #3A3550; line-height: 1.3">Starts 3 reps ahead. From Mihir&#39;s Push-ups.</span></div>
 </div>
 <div style="position: relative">[[CAM]]<span style="position: absolute; left: 16px; bottom: 12px; font-size: 18px; font-weight: 700; color: #FFCB47; [[FH]]">rep check: form looks good</span></div>
 <span style="font-size: 20px; font-weight: 700; color: #B8431F; text-align: center; line-height: 1.1; [[FH]]">2 behind, but your next rep is a double!</span>
 [[NEXT]]
 </div>""",
     PHONE=PHONE, FD=FD, FH=FH, CARD=CARDSTYLE,
-    HEAD=header("Street duel", "vs Maya_lifts · 40 m away", '<span style="padding: 6px 14px; border-radius: 999px; background: #22203A; color: #FFFFFF; font-size: 18px; font-weight: 700; ' + FD + '">1 – 0</span>', backlink("Forfeit duel", "Map.dc.html", "close")),
+    HEAD=header("Street duel", "vs Mihir_lifts", '<span style="padding: 6px 14px; border-radius: 999px; background: #22203A; color: #FFFFFF; font-size: 18px; font-weight: 700; ' + FD + '">1 – 0</span>', backlink("Forfeit duel", "Map.dc.html", "close")),
     CLK=ic("clock", 20, CORALTXT), AV_ME=avatar("VR", 44, SUN, INK, 0, "#FFFFFF"), AV_MAYA=avatar("M", 44, CORAL, INK, 2, "#FFFFFF"),
     TOK_ME=token("rare", "pushup", 34, v=1), TOK_MAYA=token("common", "pushup", 34, v=2), CAM=cam,
     NEXT=btn_primary("See the result", "arrowR", "DuelResult.dc.html", 54),
@@ -875,7 +1000,7 @@ result_body = T("""<div style="[[PHONE]]">
 <span style="padding: 8px 4px; border-radius: 18px; background: #D6F3E2; display: flex; flex-direction: column; align-items: center; line-height: 1.2"><span style="font-size: 12px; font-weight: 900; color: #13784C">50 m sprint</span><span style="font-size: 12px; font-weight: 700">7.9 s vs 8.4 s</span></span>
 </div>
 <div style="padding: 14px 0 16px; border-radius: 28px; [[CARD]]; display: flex; flex-direction: column; align-items: center; gap: 10px">
-<span style="display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 900">[[DICE]]Stealing from Maya&#39;s FitDex…</span>
+<span style="display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 900">[[DICE]]Stealing from Mihir&#39;s FitDex…</span>
 <div style="position: relative; width: 100%; height: 104px; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 14px">
 [[REEL]]
 <svg width="24" height="14" viewBox="0 0 24 14" aria-hidden="true" style="position: absolute; left: 183px; top: 0"><path d="M2 2 H22 L12 12 Z" style="fill: #22203A; stroke: #22203A; stroke-width: 2; stroke-linejoin: round"></path></svg>
@@ -884,12 +1009,12 @@ result_body = T("""<div style="[[PHONE]]">
 [[UNC]]
 </div>
 <div style="padding: 12px 14px; border-radius: 22px; background: #FFF1CC; display: flex; flex-direction: column; gap: 8px">
-<span style="font-size: 14px; font-weight: 800; line-height: 1.3">Common FitMon get picked most. Maya&#39;s Mythic Front Lever only had a <b style="font-weight: 900; color: #C0305F">2% chance</b>.</span>
+<span style="font-size: 14px; font-weight: 800; line-height: 1.3">Common FitMon get picked most. Mihir&#39;s Mythic Front Lever only had a <b style="font-weight: 900; color: #C0305F">2% chance</b>.</span>
 [[STACK]]
 </div>
 <div style="display: flex; flex-direction: column; gap: 12px; margin-top: auto">
 [[ADD]]
-<span style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; font-weight: 700; color: #6E6878">[[CLK]]Rematch with Maya opens in 24 h</span>
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; font-weight: 700; color: #6E6878">[[CLK]]Rematch with Mihir opens in 24 h</span>
 </div>
 </div>
 </div>""",
@@ -1031,7 +1156,7 @@ row2 = [("Map.dc.html", "01 · Explore map (world turns with you)"), ("Encounter
         ("Dex.dc.html", "05 · FitDex"), ("Profile.dc.html", "06 · Trainer stats")]
 row3 = [("Battle.dc.html", "07 · Online arena"), ("Finisher.dc.html", "08 · Finisher unlocked"),
         ("DuelInvite.dc.html", "09 · Street duel invite"), ("DuelLive.dc.html", "10 · Street duel, set 2"),
-        ("DuelResult.dc.html", "11 · Street duel result + steal")]
+        ("DuelResult.dc.html", "11 · Street duel result + steal"), ("Deck.dc.html", "12 · Battle deck")]
 boards = {"Main.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 900, "title": "Pitch hero"},
           "HowItPlays.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 900, "title": "How it plays"},
           "StreetDuels.dc.html": {"x": 3040, "y": 0, "w": 1440, "h": 900, "title": "Street duels (new feature)"}}
