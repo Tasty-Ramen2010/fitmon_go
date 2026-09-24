@@ -24,12 +24,19 @@
    "h": 900,
    "title": "How it plays"
   },
+  "StreetDuels.dc.html": {
+   "x": 3040,
+   "y": 0,
+   "w": 1440,
+   "h": 900,
+   "title": "Street duels (new feature)"
+  },
   "Map.dc.html": {
    "x": 0,
    "y": 1320,
    "w": 390,
    "h": 844,
-   "title": "01 · Explore map (world rotates with you)",
+   "title": "01 · Explore map (world turns with you)",
    "radius": 44,
    "is_interactive": true
   },
@@ -47,7 +54,7 @@
    "y": 1320,
    "w": 390,
    "h": 844,
-   "title": "03 · Street Mode missions",
+   "title": "03 · Street mode",
    "radius": 44,
    "is_interactive": true
   },
@@ -56,7 +63,7 @@
    "y": 1320,
    "w": 390,
    "h": 844,
-   "title": "04 · Gym Mode raid",
+   "title": "04 · Gym mode raid",
    "radius": 44,
    "is_interactive": true
   },
@@ -65,7 +72,7 @@
    "y": 1320,
    "w": 390,
    "h": 844,
-   "title": "05 · FitDex collection",
+   "title": "05 · FitDex",
    "radius": 44,
    "is_interactive": true
   },
@@ -79,20 +86,47 @@
    "is_interactive": true
   },
   "Battle.dc.html": {
-   "x": 2820,
-   "y": 1320,
+   "x": 0,
+   "y": 2544,
    "w": 390,
    "h": 844,
-   "title": "07 · Online battle",
+   "title": "07 · Online arena",
    "radius": 44,
    "is_interactive": true
   },
   "Finisher.dc.html": {
-   "x": 3290,
-   "y": 1320,
+   "x": 470,
+   "y": 2544,
    "w": 390,
    "h": 844,
    "title": "08 · Finisher unlocked",
+   "radius": 44,
+   "is_interactive": true
+  },
+  "DuelInvite.dc.html": {
+   "x": 940,
+   "y": 2544,
+   "w": 390,
+   "h": 844,
+   "title": "09 · Street duel invite",
+   "radius": 44,
+   "is_interactive": true
+  },
+  "DuelLive.dc.html": {
+   "x": 1410,
+   "y": 2544,
+   "w": 390,
+   "h": 844,
+   "title": "10 · Street duel, set 2",
+   "radius": 44,
+   "is_interactive": true
+  },
+  "DuelResult.dc.html": {
+   "x": 1880,
+   "y": 2544,
+   "w": 390,
+   "h": 844,
+   "title": "11 · Street duel result + steal",
    "radius": 44,
    "is_interactive": true
   }
@@ -100,6 +134,7 @@
  "order": [
   "Main.dc.html",
   "HowItPlays.dc.html",
+  "StreetDuels.dc.html",
   "Map.dc.html",
   "Encounter.dc.html",
   "Street.dc.html",
@@ -107,7 +142,10 @@
   "Dex.dc.html",
   "Profile.dc.html",
   "Battle.dc.html",
-  "Finisher.dc.html"
+  "Finisher.dc.html",
+  "DuelInvite.dc.html",
+  "DuelLive.dc.html",
+  "DuelResult.dc.html"
  ],
  "notes": {
   "t1": {
@@ -115,14 +153,21 @@
    "y": -300,
    "text": "FitMon GO: pitch visuals",
    "kind": "title1",
-   "maxW": 2960
+   "maxW": 4480
   },
   "t2": {
    "x": 0,
    "y": 1060,
-   "text": "App screens (press Play to click through)",
+   "text": "Explore & train (press Play to click through)",
    "kind": "title1",
-   "maxW": 3680
+   "maxW": 2740
+  },
+  "t3": {
+   "x": 0,
+   "y": 2284,
+   "text": "Battle & street duels",
+   "kind": "title1",
+   "maxW": 2270
   }
  },
  "designSystems": []
