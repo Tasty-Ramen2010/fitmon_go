@@ -5,7 +5,7 @@ bright friendly map (Pokemon GO), soft organic blobs (Headspace), route cards
 (Strava). Type: Fraunces (display serif), Nunito (rounded UI sans), Caveat
 (hand-written notes).
 """
-import json, math, os
+import json, math, os, re
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "screens")
 
@@ -149,6 +149,8 @@ def page(title, body, w, h, script=None, props=None):
         p = dict(props, **p)
     pj = json.dumps(p, ensure_ascii=False).replace("&", "&amp;").replace("'", "&#39;")
     script = script or "renderVals() { return {}; }"
+    # No decorative italics anywhere: <i> becomes a plain span, italic styles are dropped.
+    body = re.sub(r'<i( style="[^"]*")?>', r'<span\1>', body).replace("</i>", "</span>").replace("font-style: italic; ", "")
     return ("<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>" + title +
             "</title>\n<script src=\"./support.js\"></script>\n</head>\n<body>\n<x-dc>\n" + HELMET + "\n" + body +
             "\n</x-dc>\n<script type=\"text/x-dc\" data-dc-script data-props='" + pj + "'>\nclass Component extends DCLogic {\n" +
@@ -262,24 +264,13 @@ const proj = (wx, wy) => {
 const onScreen = (q) => q.y > 110 && q.y < 585 && q.x > 24 && q.x < 366;
 const raw = [
   { label: 'Push-ups ×20', r: 'common', icon: 'pushup', wx: -140, wy: -200 },
-  { label: 'Squats ×25', r: 'common', icon: 'squat', wx: 125, wy: -250 },
-  { label: 'Sprint 800 m', r: 'mission', icon: 'run', wx: 0, wy: -330 },
   { label: 'Pull-ups ×8', r: 'rare', icon: 'pullup', wx: -100, wy: -420 },
-  { label: 'Burpees ×15', r: 'uncommon', icon: 'burpee', wx: -190, wy: -620 },
   { label: 'Front Lever', r: 'mythic', icon: 'frontlever', wx: -40, wy: -720 },
-  { label: 'Muscle-up ×3', r: 'legendary', icon: 'muscleup', wx: 160, wy: -1000 },
-  { label: 'Squats ×25', r: 'common', icon: 'squat', wx: 420, wy: -300 },
-  { label: 'Push-ups ×20', r: 'common', icon: 'pushup', wx: -420, wy: -380 },
-  { label: 'Pull-ups ×8', r: 'rare', icon: 'pullup', wx: 380, wy: -620 },
-  { label: 'Burpees ×15', r: 'uncommon', icon: 'burpee', wx: -380, wy: -760 },
-  { label: 'Push-ups ×20', r: 'common', icon: 'pushup', wx: 280, wy: 60 },
-  { label: 'Sprint 400 m', r: 'mission', icon: 'run', wx: 560, wy: -60 },
+  { label: 'Squats ×25', r: 'common', icon: 'squat', wx: 300, wy: 40 },
   { label: 'Pistol Squat', r: 'epic', icon: 'squat', wx: 820, wy: 120 },
   { label: 'Burpees ×15', r: 'uncommon', icon: 'burpee', wx: -300, wy: -40 },
-  { label: 'Squats ×25', r: 'common', icon: 'squat', wx: -600, wy: 80 },
   { label: 'Pull-ups ×8', r: 'rare', icon: 'pullup', wx: -850, wy: -60 },
   { label: 'Push-ups ×20', r: 'common', icon: 'pushup', wx: -60, wy: 320 },
-  { label: 'Walk 1 km', r: 'mission', icon: 'run', wx: 100, wy: 600 },
   { label: 'Muscle-up ×3', r: 'legendary', icon: 'muscleup', wx: -150, wy: 900 }
 ];
 const spawns = raw.map((p, i) => {
@@ -288,7 +279,7 @@ const spawns = raw.map((p, i) => {
   return { label: p.label, tier: c.name, mark: c.mark, text: c.text, fill: c.fill, shape: SHAPES[i % 4], icon: ICON[p.icon],
     x: q.x, y: q.y, s: q.s, sparkle: p.r === 'mythic' || p.r === 'legendary' };
 }).filter(onScreen).sort((a, b) => a.y - b.y);
-const g = proj(-100, -980);
+const g = proj(-180, -1000);
 const t = proj(150, -560);
 return { worldRot: -heading, spawns: spawns, gym: g, showGym: onScreen(g), rival: t, showRival: onScreen(t) };
 }"""
@@ -355,15 +346,9 @@ map_body = T("""<div style="[[PHONE]]">
 <svg width="32" height="32" viewBox="0 0 34 34" aria-hidden="true" style="transform: rotate({{worldRot}}deg)"><path d="M17 3 L22 17 L17 15 L12 17 Z" style="fill: #FF7A59; stroke: #FF7A59; stroke-width: 2; stroke-linejoin: round"></path><path d="M17 31 L22 17 L17 19 L12 17 Z" style="fill: #D6CCBC; stroke: #D6CCBC; stroke-width: 2; stroke-linejoin: round"></path></svg>
 </button>
 </div>
-<div style="position: absolute; left: 14px; top: 636px; width: 176px; box-sizing: border-box; padding: 10px 14px 12px; border-radius: 22px; [[CARD]]; display: flex; flex-direction: column; gap: 5px">
-<span style="font-size: 17px; font-weight: 700; color: #B8431F; line-height: 1; [[FH]]">on a mission</span>
-<span style="font-size: 14px; font-weight: 900">Lap the Riverside</span>
-[[MBAR]]
-<span style="font-size: 12px; font-weight: 700; color: #6E6878">1.24 of 2.0 km</span>
-</div>
-<div style="position: absolute; right: 14px; top: 636px; width: 170px; box-sizing: border-box; padding: 10px 12px 12px; border-radius: 22px; [[CARD]]; display: flex; flex-direction: column; gap: 5px">
-<span style="font-size: 17px; font-weight: 700; color: #6E6878; line-height: 1; [[FH]]">nearby</span>
-[[NEARBY]]
+<div style="position: absolute; left: 34px; right: 34px; top: 662px; height: 60px; box-sizing: border-box; padding: 0 16px 0 8px; border-radius: 999px; [[CARD]]; display: flex; align-items: center; gap: 10px">
+<span style="flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; background: #FFE4DA; display: flex; align-items: center; justify-content: center">[[RUNI]]</span>
+<span style="flex-grow: 1; display: flex; flex-direction: column; gap: 5px"><span style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 900"><span>Lap the Riverside</span><span style="font-weight: 800; color: #6E6878">1.24 / 2 km</span></span>[[MBAR]]</span>
 </div>
 <nav aria-label="Main" style="position: absolute; left: 0; right: 0; bottom: 16px; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 40px">
 <a href="Dex.dc.html" style="width: 60px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #22203A; font-size: 12px; font-weight: 800"><span style="width: 54px; height: 54px; box-sizing: border-box; border-radius: 50%; [[CARD]]; display: flex; align-items: center; justify-content: center">[[GRID]]</span>FitDex</a>
@@ -374,8 +359,7 @@ map_body = T("""<div style="[[PHONE]]">
     PHONE=PHONE, SVG=map_svg(), FD=FD, FH=FH, CARD=CARDSTYLE, SPARK=SPARK, DB=ic("dumbbell", 28, "#7B3FD0", 2.4),
     AV=avatar("VR", 44, SUN, INK, 0), XPBAR=bar(84, CORAL, 6), MBAR=bar(62, CORAL, 8),
     GRID=ic("grid", 22, INK), SWORDS=ic("swords", 22, INK), BOLT=ic("bolt", 26, INK, 2.4),
-    NEARBY="".join(T('<div style="display: flex; align-items: center; gap: 8px">[[t]]<span style="flex-grow: 1; font-size: 13px; font-weight: 800; white-space: nowrap">[[n]]</span><span style="font-size: 12px; font-weight: 700; color: #6E6878">[[m]]</span></div>',
-                     t=token(r, i, 22, v=j, sparkles=False), n=n, m=m) for j, (r, i, n, m) in enumerate([("mythic", "frontlever", "Front Lever", "180 m"), ("legendary", "muscleup", "Muscle-up", "240 m"), ("rare", "pullup", "Pull-ups", "95 m")])),
+    RUNI=ic("run", 22, CORALTXT),
 )
 files["Map.dc.html"] = page("Explore map", map_body, 390, 844, map_script,
                             {"heading": {"editor": "range", "min": 0, "max": 355, "step": 5, "unit": "°", "default": 0, "section": "Player"}})
@@ -386,24 +370,21 @@ files["Map.dc.html"] = page("Explore map", map_body, 390, 844, map_script,
 MYT = R["mythic"]
 reward = lambda v, l, c: T('<div style="padding: 12px 8px; border-radius: 20px; [[CARD]]; display: flex; flex-direction: column; align-items: center; gap: 0"><span style="font-size: 26px; font-weight: 700; color: [[c]]; [[FD]]">[[v]]</span><span style="font-size: 12px; font-weight: 700; color: #6E6878">[[l]]</span></div>', CARD=CARDSTYLE, c=c, v=v, l=l, FD=FD)
 enc_body = T("""<div style="[[PHONE]]">
-<div style="position: absolute; left: 30px; top: 110px; width: 330px; height: 300px; border-radius: 58% 42% 55% 45% / 52% 58% 42% 48%; background: #FFE0EA"></div>
-<div style="position: absolute; left: 250px; top: 90px; width: 110px; height: 90px; border-radius: 45% 55% 42% 58% / 55% 45% 55% 45%; background: #FFEFC9"></div>
+<div style="position: absolute; left: 30px; top: 100px; width: 330px; height: 290px; border-radius: 58% 42% 55% 45% / 52% 58% 42% 48%; background: #FFE0EA"></div>
 <div style="position: absolute; left: 16px; right: 16px; top: 20px; display: flex; align-items: center; gap: 12px">
 [[BACK]]
 <div style="display: flex; flex-direction: column; line-height: 1.2"><span style="font-size: 13px; font-weight: 700; color: #6E6878">Wild spawn · Riverside Park</span><span style="font-size: 15px; font-weight: 900">180 m away · gone in 14:52</span></div>
 </div>
-<div style="position: absolute; left: 0; top: 150px; width: 390px; display: flex; justify-content: center">[[TOKEN]]</div>
-<svg width="140" height="70" viewBox="0 0 140 70" aria-hidden="true" style="position: absolute; left: 36px; top: 360px"><path d="M8 10 C 30 50, 70 60, 118 40" style="fill: none; stroke: #C0305F; stroke-width: 2.5; stroke-linecap: round"></path><path d="M106 32 L120 40 L108 50" style="fill: none; stroke: #C0305F; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round"></path></svg>
-<span style="position: absolute; left: 20px; top: 330px; transform: rotate(-6deg); font-size: 24px; font-weight: 700; color: #C0305F; [[FH]]">psst… only 1 in 500 spawns!</span>
-<div style="position: absolute; left: 16px; right: 16px; top: 430px; display: flex; flex-direction: column; align-items: center; gap: 6px">
+<div style="position: absolute; left: 0; top: 161px; width: 390px; display: flex; justify-content: center">[[TOKEN]]</div>
+<div style="position: absolute; left: 16px; right: 16px; top: 412px; display: flex; flex-direction: column; align-items: center; gap: 6px">
 [[PILL]]
-<h1 style="margin: 0; font-size: 46px; line-height: 1; font-weight: 700; letter-spacing: -0.01em; [[FD]]">Front <i style="font-weight: 600">Lever</i></h1>
+<h1 style="margin: 0; font-size: 46px; line-height: 1; font-weight: 700; letter-spacing: -0.01em; [[FD]]">Front Lever</h1>
 <span style="font-size: 15px; font-weight: 700; color: #6E6878">Hold 5 seconds · 3 sets</span>
 </div>
-<div style="position: absolute; left: 16px; right: 16px; top: 548px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">[[REWARDS]]</div>
-<div style="position: absolute; left: 16px; right: 16px; top: 640px; padding: 12px 14px; box-sizing: border-box; border-radius: 22px; background: #FFE0EA; display: flex; align-items: center; gap: 12px">
+<div style="position: absolute; left: 16px; right: 16px; top: 528px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">[[REWARDS]]</div>
+<div style="position: absolute; left: 16px; right: 16px; top: 624px; padding: 12px 14px; box-sizing: border-box; border-radius: 22px; background: #FFE0EA; display: flex; align-items: center; gap: 12px">
 <span style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center">[[FLAME]]</span>
-<span style="font-size: 14px; font-weight: 700; line-height: 1.3">Catch it to unlock the <b style="font-weight: 900; color: #C0305F">Horizon Cutter</b> finisher. Not ready? Try the Tuck Lever first.</span>
+<span style="font-size: 14px; font-weight: 700; line-height: 1.3">Catch it to unlock the <b style="font-weight: 900; color: #C0305F">Horizon Cutter</b> finisher</span>
 </div>
 <div style="position: absolute; left: 16px; right: 16px; bottom: 22px; display: flex; flex-direction: column; gap: 10px">
 [[CTA]]
@@ -541,32 +522,37 @@ files["Gym.dc.html"] = page("Gym mode", gym_body, 390, 844)
 # =====================================================================
 # FITDEX
 # =====================================================================
-dex = [("common", "pushup", "Push-ups", True), ("common", "squat", "Squats", True), ("common", "walk", "Lunges", True),
-       ("uncommon", "burpee", "Burpees", True), ("uncommon", "dumbbell", "Dips", True), ("rare", "pullup", "Pull-ups", True),
-       ("rare", "pushup", "Diamond Push-ups", True), ("epic", "squat", "Pistol Squat", True), ("epic", "lsit", "L-sit", False),
-       ("legendary", "muscleup", "Muscle-up", True), ("mythic", "frontlever", "Front Lever", False), ("mythic", "planche", "Planche", False)]
-cards = "".join(
-    T('<div style="height: 122px; box-sizing: border-box; padding: 10px 6px; border-radius: 22px; background: [[bg]]; border: [[bd]]; [[sh]] display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px">[[t]]<span style="font-size: 12px; font-weight: 900; text-align: center; line-height: 1.15; color: [[nc]]">[[n]]</span><span style="font-size: 15px; font-weight: 700; line-height: 1; color: [[rc]]; [[FH]]">[[rn]]</span></div>',
-      bg=CARD if got else "transparent", bd="2px solid #EFE4D3" if got else "2px dashed #D9CCB8", sh="box-shadow: 0 3px 0 #EADFCF;" if got else "",
-      t=token(r, i, 50, v=k, locked=not got), n=n if got else "???", nc=INK if got else MUTED, rc=R[r][2], rn=R[r][0], FH=FH)
-    for k, (r, i, n, got) in enumerate(dex))
-filters = "".join(
-    T('<span style="flex-shrink: 0; padding: 7px 14px; border-radius: 999px; font-size: 13px; font-weight: 800; background: [[bg]]; color: [[c]]; [[b]]">[[n]]</span>',
-      bg=INK if k is None else R[k][3], c="#FFFFFF" if k is None else R[k][2], b="", n=n)
-    for n, k in [("All", None)] + [(v[0], k) for k, v in R.items()])
+# What this trainer actually owns: a pyramid, rarest on top.
+owned = [
+    ("mythic", [("planche", "Planche")]),
+    ("legendary", [("muscleup", "Muscle-up")]),
+    ("epic", [("squat", "Pistol Squat"), ("lsit", "L-sit")]),
+    ("rare", [("pullup", "Pull-ups"), ("pushup", "Diamond Push-ups"), ("frontlever", "Tuck Lever")]),
+    ("uncommon", [("burpee", "Burpees"), ("dumbbell", "Dips"), ("squat", "Jump Squats"), ("walk", "Step-ups")]),
+    ("common", [("pushup", "Push-ups"), ("squat", "Squats"), ("walk", "Lunges"), ("pushup", "Plank"), ("burpee", "Sit-ups")]),
+]
+tiers = []
+k = 0
+for r, items in owned:
+    cells = []
+    for icon, name in items:
+        badge = ('<span style="position: absolute; right: -6px; top: -6px; padding: 1px 6px; border-radius: 999px; background: #FF7A59; color: #22203A; font-size: 10px; font-weight: 900">new</span>') if name == "Burpees" else ""
+        cells.append(T('<div style="width: 66px; display: flex; flex-direction: column; align-items: center; gap: 4px"><span style="position: relative">[[t]][[b]]</span><span style="font-size: 11px; font-weight: 800; line-height: 1.1; text-align: center">[[n]]</span></div>',
+                       t=token(r, icon, 40, v=k, sparkles=False), b=badge, n=name))
+        k += 1
+    tiers.append(T('<div style="display: flex; flex-direction: column; align-items: center; gap: 5px"><span style="display: flex; align-items: center; gap: 6px">[[p]]<span style="font-size: 12px; font-weight: 800; color: #6E6878">[[c]] caught</span></span><div style="display: flex; justify-content: center; gap: 4px">[[cells]]</div></div>',
+                   p=pill(r, 11), c=len(items), cells="".join(cells)))
 dex_body = T("""<div style="[[PHONE]]">
 <div style="position: absolute; right: -40px; top: -50px; width: 190px; height: 170px; border-radius: 58% 42% 55% 45% / 52% 58% 42% 48%; background: #FFE9C2"></div>
-<div style="position: relative; padding: 22px 16px 0; display: flex; flex-direction: column; gap: 12px">
+<div style="position: relative; padding: 22px 16px 0; display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; align-items: flex-end; justify-content: space-between">
-<div style="display: flex; flex-direction: column"><span style="font-size: 38px; line-height: 1; font-weight: 700; [[FD]]">Fit<i>Dex</i></span><span style="font-size: 20px; font-weight: 700; color: #B8431F; [[FH]]">38 caught, 82 still out there</span></div>
-<span style="font-size: 30px; font-weight: 700; [[FD]]">38<span style="font-size: 16px; color: #6E6878">/120</span></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 38px; line-height: 1; font-weight: 700; [[FD]]">FitDex</span><span style="font-size: 14px; font-weight: 700; color: #6E6878">Your collection, rarest at the top</span></div>
+<span style="display: flex; flex-direction: column; align-items: flex-end; line-height: 1"><span style="font-size: 34px; font-weight: 700; [[FD]]">16</span><span style="font-size: 12px; font-weight: 800; color: #6E6878">FitMon</span></span>
 </div>
-[[PB]]
-<div style="display: flex; gap: 8px; overflow: hidden; margin-right: -16px">[[FILTERS]]</div>
-<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">[[CARDS]]</div>
+<div style="padding: 14px 8px 16px; border-radius: 28px; [[CARD]]; display: flex; flex-direction: column; gap: 10px">[[TIERS]]</div>
 </div>
 [[NAV]]
-</div>""", PHONE=PHONE, FD=FD, FH=FH, PB=bar(32, CORAL, 10), FILTERS=filters, CARDS=cards, NAV=navbar("FitDex"))
+</div>""", PHONE=PHONE, FD=FD, CARD=CARDSTYLE, TIERS="".join(tiers), NAV=navbar("FitDex"))
 files["Dex.dc.html"] = page("FitDex collection", dex_body, 390, 844)
 
 # =====================================================================
@@ -628,50 +614,84 @@ files["Profile.dc.html"] = page("Trainer profile", prof_body, 390, 844)
 # ONLINE BATTLE
 # =====================================================================
 LEG = R["legendary"]
-moves = "".join(T('<button style="height: 66px; box-sizing: border-box; padding: 8px 12px 8px 8px; border-radius: 22px; [[CARD]]; color: #22203A; text-align: left; display: flex; align-items: center; gap: 10px; cursor: pointer"><span style="flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; background: [[bg]]; display: flex; align-items: center; justify-content: center">[[i]]</span><span style="display: flex; flex-direction: column; line-height: 1.2"><span style="font-size: 14px; font-weight: 900">[[n]]</span><span style="font-size: 12px; font-weight: 700; color: #6E6878">[[s]]</span></span></button>',
-                  CARD=CARDSTYLE, bg=R[r][3], i=ic(i, 22, R[r][2]), n=n, s=s) for i, n, s, r in [
-    ("pushup", "Power Push", "Strength · 60 dmg", "common"), ("run", "Tempo Dash", "Speed · hit first", "rare"),
+
+
+def fighter(rarity, icon, size, look, v=0):
+    """A FitMon as a character: blob body, eyes looking at the opponent, cheeks, smile, move emblem."""
+    name, mark, txt, fill = R[rarity]
+    e = round(size * 0.2)
+    p_ = round(e * 0.55)
+    eyes = ""
+    for cx in (0.36, 0.64):
+        x = round(size * cx - e / 2 + look * size * 0.05)
+        eyes += ('<span style="position: absolute; left: %dpx; top: %dpx; width: %dpx; height: %dpx; border-radius: 50%%; background: #FFFFFF; border: 2px solid %s; box-sizing: border-box; display: flex; align-items: center; justify-content: center">'
+                 '<span style="width: %dpx; height: %dpx; border-radius: 50%%; background: #22203A; transform: translate(%dpx, 1px)"></span></span>') % (x, round(size * 0.22), e, e, mark, p_, p_, round(look * e * 0.16))
+        eyes += '<span style="position: absolute; left: %dpx; top: %dpx; width: %dpx; height: %dpx; border-radius: 50%%; background: %s; opacity: 0.35"></span>' % (
+            round(size * cx - e * 0.45 + look * size * 0.05 + (-e * 0.35 if cx < 0.5 else e * 0.35)), round(size * 0.22 + e + 3), round(e * 0.9), round(e * 0.45), mark)
+    mw = round(size * 0.16)
+    mouth = '<svg width="%d" height="%d" viewBox="0 0 20 10" aria-hidden="true" style="position: absolute; left: %dpx; top: %dpx"><path d="M3 2 Q10 9 17 2" style="fill: none; stroke: #22203A; stroke-width: 2.5; stroke-linecap: round"></path></svg>' % (
+        mw, round(mw / 2), round(size / 2 - mw / 2 + look * size * 0.05), round(size * 0.46))
+    d = round(size * 0.36)
+    emblem = T('<span style="position: absolute; left: [[l]]px; top: [[t]]px; width: [[d]]px; height: [[d]]px; box-sizing: border-box; border-radius: 50%; background: #FFFFFF; border: 3px solid [[m]]; display: flex; align-items: center; justify-content: center">[[i]]</span>',
+               l=round(size / 2 - d / 2), t=round(size * 0.6), d=d, m=mark, i=ic(icon, round(d * 0.62), mark, 2.4))
+    return T('<div style="position: relative; width: [[s]]px; height: [[s]]px"><div style="position: absolute; left: 0; top: 0; width: [[s]]px; height: [[s]]px; box-sizing: border-box; border-radius: [[br]]; background: [[f]]; border: [[b]]px solid [[m]]"></div>[[eyes]][[mouth]][[emblem]]</div>',
+             s=size, br=BLOBS[v % 4], f=fill, b=max(3, size // 26), m=mark, eyes=eyes, mouth=mouth, emblem=emblem)
+
+
+moves = "".join(T('<button style="height: 64px; box-sizing: border-box; padding: 8px 10px 8px 8px; border-radius: 22px; background: [[bg]]; border: 0; box-shadow: 0 3px 0 [[sh]]; color: #22203A; text-align: left; display: flex; align-items: center; gap: 10px; cursor: pointer"><span style="flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center">[[i]]</span><span style="display: flex; flex-direction: column; line-height: 1.2"><span style="font-size: 15px; font-weight: 900">[[n]]</span><span style="font-size: 12px; font-weight: 700; color: #4A4458">[[s]]</span></span></button>',
+                  bg=R[r][3], sh=rgba(R[r][1], 0.35), i=ic(i, 22, R[r][2]), n=n, s=s) for i, n, s, r in [
+    ("pushup", "Power Push", "Strength · 60 dmg", "common"), ("run", "Tempo Dash", "Speed · hits first", "rare"),
     ("shield", "Core Brace", "Take 40% less", "uncommon"), ("heart", "Second Wind", "Heal 80 · 2 left", "mythic")])
-battle_body = T("""<div style="[[PHONE]]; padding: 20px 16px; display: flex; flex-direction: column; gap: 10px">
-[[HEAD]]
-<div style="padding: 10px 14px 10px 10px; border-radius: 24px; [[CARD]]; display: flex; align-items: center; gap: 12px">
-[[AV_OPP]]
-<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 5px">
-<span style="display: flex; justify-content: space-between; font-size: 15px; font-weight: 900"><span>IronVee <span style="color: #6E6878; font-weight: 700">Lv 26</span></span><span style="font-size: 13px">210/500</span></span>
-[[HP_OPP]]
-<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 800; color: #1B4AAE">[[SH]]Guard up for 1 turn</span>
-</div>
-</div>
-<div style="position: relative; height: 220px; border-radius: 28px; overflow: hidden; background: #D3EDFB">
-<svg width="358" height="220" viewBox="0 0 358 220" aria-hidden="true" style="position: absolute; left: 0; top: 0">
-<path d="M0 120 C 80 90, 150 110, 220 96 S 330 80, 358 100 L358 220 L0 220 Z" style="fill: #C9E7A9"></path>
-<path d="M0 160 C 90 140, 200 175, 358 150 L358 220 L0 220 Z" style="fill: #B4DD92"></path>
-<ellipse cx="270" cy="112" rx="56" ry="13" style="fill: rgba(34, 32, 58, 0.12)"></ellipse>
-<ellipse cx="96" cy="196" rx="70" ry="15" style="fill: rgba(34, 32, 58, 0.12)"></ellipse>
-<path d="M150 150 C 180 120, 210 90, 238 64" style="fill: none; stroke: #FF7A59; stroke-width: 7; stroke-linecap: round"></path>
-<path d="M160 164 C 190 134, 222 104, 250 80" style="fill: none; stroke: #FFCB47; stroke-width: 5; stroke-linecap: round"></path>
-<path d="M248 30 l6 16 17 -4 -12 12 12 12 -17 -4 -6 16 -6 -16 -17 4 12 -12 -12 -12 17 4z" style="fill: #FFCB47; stroke: #FFFFFF; stroke-width: 3; stroke-linejoin: round"></path>
-<circle cx="40" cy="36" r="18" style="fill: #FFFFFF; opacity: 0.8"></circle><circle cx="64" cy="40" r="13" style="fill: #FFFFFF; opacity: 0.8"></circle>
+pips = "".join('<span style="width: 16px; height: 8px; border-radius: 999px; background: #E0A51A"></span>' for _ in range(4))
+battle_body = T("""<div style="[[PHONE]]">
+<div style="position: absolute; left: 0; top: 0; width: 390px; height: 500px; background: linear-gradient(180deg, #BFE4FA 0%, #E6F5FD 60%)"></div>
+<div style="position: absolute; left: 30px; top: 186px; width: 84px; height: 24px; border-radius: 999px; background: #FFFFFF"></div>
+<div style="position: absolute; left: 52px; top: 172px; width: 38px; height: 32px; border-radius: 50%; background: #FFFFFF"></div>
+<div style="position: absolute; left: 150px; top: 238px; width: 64px; height: 18px; border-radius: 999px; background: #FFFFFF; opacity: 0.8"></div>
+<svg width="390" height="500" viewBox="0 0 390 500" aria-hidden="true" style="position: absolute; left: 0; top: 0">
+<path d="M0 250 C 70 215, 150 240, 220 222 S 340 200, 390 226 L390 500 L0 500 Z" style="fill: #CDE8B0"></path>
+<path d="M0 290 C 110 262, 250 300, 390 272 L390 500 L0 500 Z" style="fill: #BFE0A0"></path>
+<ellipse cx="195" cy="380" rx="250" ry="96" style="fill: #F3E3C3"></ellipse>
+<ellipse cx="195" cy="380" rx="200" ry="72" style="fill: none; stroke: #FFFFFF; stroke-width: 4"></ellipse>
+<line x1="195" y1="308" x2="195" y2="452" style="stroke: #FFFFFF; stroke-width: 4"></line>
+<ellipse cx="195" cy="380" rx="36" ry="13" style="fill: none; stroke: #FFFFFF; stroke-width: 4"></ellipse>
+<ellipse cx="290" cy="258" rx="74" ry="17" style="fill: #A9D98A; stroke: #8FC56F; stroke-width: 3"></ellipse>
+<ellipse cx="110" cy="444" rx="94" ry="21" style="fill: #A9D98A; stroke: #8FC56F; stroke-width: 3"></ellipse>
+<path d="M176 346 C 206 300, 232 262, 262 214" style="fill: none; stroke: #FF7A59; stroke-width: 9; stroke-linecap: round"></path>
+<path d="M192 360 C 222 316, 250 282, 280 238" style="fill: none; stroke: #FFCB47; stroke-width: 6; stroke-linecap: round"></path>
+<path d="M312 132 l9 22 23 -6 -16 17 16 17 -23 -6 -9 22 -9 -22 -23 6 16 -17 -16 -17 23 6z" style="fill: #FFCB47; stroke: #FFFFFF; stroke-width: 4; stroke-linejoin: round"></path>
 </svg>
-<div style="position: absolute; left: 234px; top: 30px">[[AV_OPP_BIG]]</div>
-<div style="position: absolute; left: 50px; top: 96px">[[AV_ME_BIG]]</div>
-<div style="position: absolute; left: 132px; top: 22px; display: flex; flex-direction: column; align-items: center; transform: rotate(-8deg)"><span style="font-size: 38px; line-height: 1; font-weight: 800; color: #B8431F; [[FD]]">−86</span><span style="font-size: 22px; font-weight: 700; color: #22203A; line-height: 1; [[FH]]">critical hit!</span></div>
+<div style="position: absolute; left: 240px; top: 146px">[[OPP]]</div>
+<div style="position: absolute; left: 44px; top: 306px">[[ME]]</div>
+<div style="position: absolute; left: 262px; top: 96px; padding: 4px 12px 6px; border-radius: 18px; background: #FFFFFF; border: 2px solid #EFE4D3; box-shadow: 0 3px 0 #EADFCF; transform: rotate(6deg); display: flex; flex-direction: column; align-items: center; line-height: 1"><span style="font-size: 30px; font-weight: 800; color: #B8431F; [[FD]]">−86</span><span style="font-size: 11px; font-weight: 900; letter-spacing: 0.04em">Critical hit</span></div>
+<div style="position: absolute; left: 16px; right: 16px; top: 18px; display: flex; align-items: center; gap: 10px">
+[[BACK]]
+<span style="flex-grow: 1; display: flex; justify-content: center"><span style="padding: 7px 14px; border-radius: 999px; background: #FFFFFF; border: 2px solid #EFE4D3; font-size: 13px; font-weight: 900">Ranked arena · Round 3</span></span>
+<span style="display: flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; background: #22203A; color: #FFFFFF; font-size: 14px; font-weight: 900">[[CLK]]0:18</span>
 </div>
-<div style="padding: 10px 14px; border-radius: 24px; [[CARD]]; display: flex; flex-direction: column; gap: 5px">
-<span style="display: flex; justify-content: space-between; font-size: 15px; font-weight: 900"><span>VoltRunner <span style="color: #6E6878; font-weight: 700">you · Lv 24</span></span><span style="font-size: 13px">390/500</span></span>
+<div style="position: absolute; left: 16px; top: 82px; width: 196px; box-sizing: border-box; padding: 10px 12px; border-radius: 22px; [[CARD]]; display: flex; flex-direction: column; gap: 6px">
+<span style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 15px; font-weight: 900">IronVee</span><span style="font-size: 12px; font-weight: 800; color: #6E6878">Lv 26</span></span>
+[[HP_OPP]]
+<span style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 12px; font-weight: 800; color: #6E6878">210 / 500</span><span style="display: flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; background: #DFE8FB; color: #1B4AAE; font-size: 11px; font-weight: 900">[[SH]]Guard up</span></span>
+</div>
+<div style="position: absolute; right: 16px; top: 318px; width: 188px; box-sizing: border-box; padding: 10px 12px; border-radius: 22px; [[CARD]]; display: flex; flex-direction: column; gap: 6px">
+<span style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 15px; font-weight: 900">VoltRunner</span><span style="font-size: 12px; font-weight: 800; color: #6E6878">Lv 24</span></span>
 [[HP_ME]]
-<span style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 900; color: #8F4A00"><span>Finisher meter</span><span>Ready!</span></span>
-[[FIN_M]]
+<span style="font-size: 12px; font-weight: 800; color: #6E6878">390 / 500</span>
+<span style="display: flex; align-items: center; justify-content: space-between"><span style="font-size: 11px; font-weight: 900; color: #8F4A00">Finisher</span><span style="display: flex; gap: 3px">[[PIPS]]</span></span>
 </div>
+<div style="position: absolute; left: 0; right: 0; top: 488px; bottom: 0; box-sizing: border-box; padding: 18px 16px 20px; border-radius: 32px 32px 0 0; background: #FFF8EE; border-top: 2px solid #EFE4D3; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between"><span style="display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 900"><span style="width: 10px; height: 10px; border-radius: 50%; background: #FF7A59"></span>Power Push landed a critical hit!</span><span style="font-size: 12px; font-weight: 800; color: #6E6878">Your turn</span></div>
 [[FINBTN]]
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">[[MOVES]]</div>
+<span style="text-align: center; font-size: 12px; font-weight: 700; color: #6E6878">Every move is powered by your real training stats</span>
+</div>
 </div>""",
-    PHONE=PHONE, FD=FD, FH=FH, CARD=CARDSTYLE,
-    HEAD=header("Ranked arena", "Round 3 · your turn · 0:18", '<span style="padding: 6px 12px; border-radius: 999px; background: #FFE9C2; color: #8F4A00; font-size: 13px; font-weight: 900">Gold II</span>', backlink("Leave match")),
-    AV_OPP=avatar("I", 44, R["rare"][3], R["rare"][2], 2), HP_OPP=bar(42, R["mythic"][1], 10), SH=ic("shield", 14, R["rare"][2]),
-    AV_OPP_BIG=avatar("I", 76, R["rare"][3], R["rare"][2], 3), AV_ME_BIG=avatar("VR", 96, SUN, INK, 0),
-    HP_ME=bar(78, R["uncommon"][1], 10), FIN_M=bar(100, "#E0A51A", 8),
-    FINBTN=T('<button style="height: 64px; box-sizing: border-box; border: 0; border-radius: 999px; background: #FFCB47; box-shadow: 0 5px 0 #E0A51A; color: #22203A; display: flex; align-items: center; gap: 12px; padding: 0 10px; cursor: pointer"><span style="width: 46px; height: 46px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center">[[i]]</span><span style="display: flex; flex-direction: column; align-items: flex-start; line-height: 1.1"><span style="font-size: 22px; font-weight: 700; font-style: italic; [[FD]]">Skybreaker</span><span style="font-size: 12px; font-weight: 800">Finisher · 220 dmg · breaks guard</span></span></button>',
+    PHONE=PHONE, FD=FD, CARD=CARDSTYLE, BACK=backlink("Leave match"), CLK=ic("clock", 14, "#FFFFFF", 2.6),
+    OPP=fighter("epic", "pullup", 100, -1, 1), ME=fighter("legendary", "muscleup", 132, 1, 0),
+    HP_OPP=bar(42, R["mythic"][1], 10), SH=ic("shield", 12, R["rare"][2], 2.6),
+    HP_ME=bar(78, R["uncommon"][1], 10), PIPS=pips,
+    FINBTN=T('<button style="height: 64px; box-sizing: border-box; border: 0; border-radius: 999px; background: #FFCB47; box-shadow: 0 5px 0 #E0A51A; color: #22203A; display: flex; align-items: center; gap: 12px; padding: 0 18px 0 9px; cursor: pointer"><span style="width: 46px; height: 46px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center">[[i]]</span><span style="flex-grow: 1; display: flex; flex-direction: column; align-items: flex-start; line-height: 1.1"><span style="font-size: 22px; font-weight: 700; [[FD]]">Skybreaker</span><span style="font-size: 12px; font-weight: 800">Finisher · 220 dmg · breaks guard</span></span><span style="font-size: 12px; font-weight: 900; padding: 4px 10px; border-radius: 999px; background: #FFFFFF">Ready</span></button>',
              i=ic("muscleup", 28, "#8F4A00", 2.2), FD=FD),
     MOVES=moves,
 )
@@ -765,12 +785,11 @@ mini_map = """<svg width="358" height="130" viewBox="0 20 358 130" aria-hidden="
 </svg>"""
 
 invite_body = T("""<div style="[[PHONE]]; padding: 20px 16px; display: flex; flex-direction: column; gap: 10px">
-<div style="display: flex; align-items: center; gap: 12px">[[BACK]]<span style="font-size: 36px; line-height: 1; font-weight: 700; color: #B8431F; transform: rotate(-3deg); [[FH]]">Run-in!</span></div>
+[[HEAD]]
 <div style="position: relative; border-radius: 26px; overflow: hidden; border: 2px solid #EFE4D3; box-shadow: 0 3px 0 #EADFCF">
 [[MAP]]
 <div style="position: absolute; left: 74px; top: 56px">[[AV_ME]]</div>
 <div style="position: absolute; left: 236px; top: 52px">[[AV_MAYA]]</div>
-<span style="position: absolute; left: 136px; top: 12px; padding: 3px 10px; border-radius: 999px; background: #22203A; color: #FFFFFF; font-size: 12px; font-weight: 900">40 m apart</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <span style="font-size: 28px; line-height: 1.05; font-weight: 700; [[FD]]">Maya_lifts wants to <i>duel</i></span>
@@ -789,7 +808,7 @@ invite_body = T("""<div style="[[PHONE]]; padding: 20px 16px; display: flex; fle
 [[DECLINE]]
 </div>
 </div>""",
-    PHONE=PHONE, FD=FD, FH=FH, BACK=backlink("Back to map"), MAP=mini_map,
+    PHONE=PHONE, FD=FD, FH=FH, HEAD=header("Street duel", "A trainer nearby wants to battle"), MAP=mini_map,
     AV_ME=avatar("VR", 52, SUN, INK, 0), AV_MAYA=avatar("M", 56, CORAL, INK, 2),
     S1=set_row(0, SETS[0]), S2=set_row(1, SETS[1]), S3=set_row(2, SETS[2]),
     DICE=ic("dice", 20, INK), STACK=odds_stack(12), LEGEND=odds_legend(11),
@@ -888,26 +907,26 @@ def phone(name, scale, left, top, rot, z):
              l=left, t=top, w=round(390 * scale) + 18, h=round(844 * scale) + 18, r=rot, z=z, br=round(48 * scale) + 9, iw=round(390 * scale), ih=round(844 * scale), ibr=round(44 * scale), s=scale, n=name)
 
 
-pillars = "".join(T('<div style="flex: 1; padding: 18px 18px 20px; border-radius: 28px; [[CARD]]; display: flex; flex-direction: column; gap: 8px"><span style="width: 50px; height: 50px; border-radius: [[br]]; background: [[bg]]; display: flex; align-items: center; justify-content: center">[[i]]</span><span style="font-size: 24px; font-weight: 700; [[FD]]">[[t]]</span><span style="font-size: 15px; line-height: 1.45; font-weight: 600; color: #6E6878">[[d]]</span></div>',
-                      CARD=CARDSTYLE, br=BLOBS[k], bg=bg, i=ic(i, 24, c), t=t, d=d, FD=FD) for k, (i, t, d, c, bg) in enumerate([
-    ("pin", "Explore", "Exercises spawn around you. Rarer moves are harder to find.", CORALTXT, PEACH),
-    ("route", "Train", "Streets give run &amp; walk missions. Gyms open muscle raids.", "#13784C", MINT),
-    ("swords", "Battle", "Duel online or bump into trainers and battle for their FitMon.", "#7B3FD0", LILAC)]))
+pillars = "".join(T('<div style="display: flex; align-items: center; gap: 16px"><span style="flex-shrink: 0; width: 52px; height: 52px; border-radius: [[br]]; background: [[bg]]; display: flex; align-items: center; justify-content: center">[[i]]</span><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 19px; font-weight: 900">[[t]]</span><span style="font-size: 16px; line-height: 1.4; font-weight: 600; color: #6E6878">[[d]]</span></span></div>',
+                      br=BLOBS[k], bg=bg, i=ic(i, 24, c), t=t, d=d) for k, (i, t, d, c, bg) in enumerate([
+    ("pin", "Explore", "Exercises spawn around you. The rarer the move, the harder it is to find.", CORALTXT, PEACH),
+    ("route", "Train", "Run and walk missions outdoors, muscle raids at the gym.", "#13784C", MINT),
+    ("swords", "Battle", "Duel online, or meet a trainer nearby and play for their FitMon.", "#7B3FD0", LILAC)]))
 
 hero_body = T("""<div style="position: relative; width: 1440px; height: 900px; overflow: hidden; background: #FFF8EE; color: #22203A; font-family: 'Nunito', system-ui, sans-serif">
 <div style="position: absolute; left: 820px; top: 70px; width: 600px; height: 560px; border-radius: 58% 42% 55% 45% / 52% 58% 42% 48%; background: #D6F3E2"></div>
 <div style="position: absolute; left: 1150px; top: 520px; width: 330px; height: 330px; border-radius: 45% 55% 42% 58% / 55% 45% 55% 45%; background: #FFE4DA"></div>
 <div style="position: absolute; left: 760px; top: 600px; width: 200px; height: 180px; border-radius: 52% 48% 60% 40% / 45% 55% 45% 55%; background: #FFE9C2"></div>
 <svg width="1440" height="900" viewBox="0 0 1440 900" aria-hidden="true" style="position: absolute; left: 0; top: 0"><path d="M-20 820 C 200 760, 420 880, 640 820 S 900 740, 1100 800" style="fill: none; stroke: #F1E4CF; stroke-width: 3; stroke-dasharray: 2 12; stroke-linecap: round"></path></svg>
-<div style="position: absolute; left: 96px; top: 0; width: 660px; height: 900px; display: flex; flex-direction: column; justify-content: center; gap: 26px">
+<div style="position: absolute; left: 104px; top: 0; width: 620px; height: 900px; display: flex; flex-direction: column; justify-content: center">
 <div style="display: flex; align-items: center; gap: 12px">
-<span style="width: 54px; height: 54px; border-radius: 58% 42% 55% 45% / 52% 58% 42% 48%; background: #FFCB47; display: flex; align-items: center; justify-content: center">[[BOLT]]</span>
-<span style="font-size: 32px; font-weight: 800; [[FD]]">FitMon <i style="color: #B8431F">GO</i></span>
-<span style="margin-left: 10px; padding: 6px 14px; border-radius: 999px; background: #FFFFFF; border: 2px solid #EADFCF; font-size: 13px; font-weight: 800; color: #6E6878">TSA app pitch</span>
+<span style="width: 48px; height: 48px; border-radius: 58% 42% 55% 45% / 52% 58% 42% 48%; background: #FFCB47; display: flex; align-items: center; justify-content: center">[[BOLT]]</span>
+<span style="font-size: 28px; font-weight: 800; [[FD]]">FitMon <span style="color: #B8431F">GO</span></span>
 </div>
-<h1 style="margin: 0; font-size: 104px; line-height: 0.95; font-weight: 700; letter-spacing: -0.02em; [[FD]]">Catch reps,<br>not <i style="color: #B8431F; font-weight: 600">monsters.</i></h1>
-<p style="margin: 0; font-size: 21px; line-height: 1.5; font-weight: 600; color: #4A4458; max-width: 580px">A location-based fitness game. Exercises spawn around you like wild creatures. Do the reps to catch them, level up real stats and battle your friends.</p>
-<div style="display: flex; gap: 14px">[[PILLARS]]</div>
+<h1 style="margin: 44px 0 0; font-size: 92px; line-height: 1; font-weight: 700; letter-spacing: -0.02em; [[FD]]">Catch reps,<br>not <span style="color: #B8431F">monsters.</span></h1>
+<p style="margin: 28px 0 0; font-size: 21px; line-height: 1.5; font-weight: 600; color: #4A4458; max-width: 540px">A fitness game played on a real map. Exercises spawn around you, you do the reps to catch them, and your real stats power your battles.</p>
+<div style="margin-top: 44px; display: flex; flex-direction: column; gap: 22px">[[PILLARS]]</div>
+<span style="margin-top: 44px; align-self: flex-start; padding: 6px 14px; border-radius: 999px; background: #FFFFFF; border: 2px solid #EADFCF; font-size: 13px; font-weight: 800; color: #6E6878">TSA app pitch</span>
 </div>
 [[P2]]
 [[P1]]
@@ -955,7 +974,6 @@ how_body = T("""<div style="position: relative; width: 1440px; height: 900px; ov
 <div style="position: absolute; right: -80px; top: -90px; width: 360px; height: 260px; border-radius: 58% 42% 55% 45% / 52% 58% 42% 48%; background: #FFE9C2"></div>
 <div style="position: relative; display: flex; align-items: flex-end; justify-content: space-between">
 <h2 style="margin: 0; font-size: 60px; line-height: 1; font-weight: 700; letter-spacing: -0.01em; [[FD]]">How FitMon GO <i>plays</i></h2>
-<span style="font-size: 30px; font-weight: 700; color: #B8431F; [[FH]]">real sweat in, game progress out</span>
 </div>
 <div style="position: relative; display: flex; gap: 8px">[[LOOP]]</div>
 <div style="display: flex; align-items: baseline; gap: 14px"><span style="font-size: 26px; font-weight: 700; [[FD]]">The rarity <i>ladder</i></span><span style="font-size: 15px; font-weight: 700; color: #6E6878">Harder skill, rarer spawn, bigger reward</span></div>
@@ -968,7 +986,7 @@ files["HowItPlays.dc.html"] = page("How it plays", how_body, 1440, 900)
 # =====================================================================
 # STREET DUELS explainer board
 # =====================================================================
-flow = [("handshake", "1. Run-in", "Two trainers within 50 m both get a duel invite. Both have to say yes.", CORALTXT, PEACH),
+flow = [("handshake", "1. Meet up", "Two trainers within 50 m both get a duel invite. Both have to say yes.", CORALTXT, PEACH),
         ("bolt", "2. Best of 3", "Three quick sets. In each set, both players get a buff from their own FitMon.", "#13784C", MINT),
         ("dice", "3. Steal", "Whoever wins two sets steals one random FitMon from the other player.", "#7B3FD0", LILAC)]
 flow_html = "".join(T('<div style="padding: 18px; border-radius: 28px; [[CARD]]; display: flex; gap: 14px; align-items: flex-start"><span style="flex-shrink: 0; width: 52px; height: 52px; border-radius: [[br]]; background: [[bg]]; display: flex; align-items: center; justify-content: center">[[i]]</span><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 24px; font-weight: 700; [[FD]]">[[t]]</span><span style="font-size: 15px; line-height: 1.45; font-weight: 600; color: #6E6878">[[d]]</span></span></div>',
